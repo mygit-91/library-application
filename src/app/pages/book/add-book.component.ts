@@ -9,13 +9,13 @@ interface CategoryOption {
 }
 
 @Component({
-  selector: 'app-new-book',
+  selector: 'app-add-book',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './new-book.component.html',
-  styleUrls: ['./new-book.component.css'],
+  templateUrl: './add-book.component.html',
+  styleUrls: ['./add-book.component.css'],
 })
-export class NewBookComponent {
+export class AddBookComponent {
   private bookService = inject(BookService);
   bookForm: FormGroup;
 

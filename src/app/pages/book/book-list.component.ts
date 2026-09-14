@@ -3,16 +3,16 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { BookService } from '../../services/book/book.service';
 import { AuthService } from '../../services/auth/auth.service';
-import { GetBookRequest, Books } from '../../services/models/book.model';
+import { GetBookRequest, Books } from '../../models/book.model';
 
 @Component({
-  selector: 'app-list-book',
+  selector: 'app-book-list',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './list-book.component.html',
-  styleUrls: ['./list-book.component.css'],
+  templateUrl: './book-list.component.html',
+  styleUrls: ['./book-list.component.css'],
 })
-export class ListBookComponent {
+export class BookListComponent {
   private authService = inject(AuthService);
   private bookService = inject(BookService);
 

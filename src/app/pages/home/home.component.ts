@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { BookService } from '../../services/book/book.service';
 import { AuthService } from '../../services/auth/auth.service';
-import { GetBookRequest, Books } from '../../services/models/book.model';
+import { GetBookRequest, Books } from '../../models/book.model';
 
 @Component({
   selector: 'app-home',

@@ -8,7 +8,7 @@ import {
   Books,
   AddNewBook,
   AddNewBookResponse,
-} from '../models/book.model';
+} from '../../models/book.model';
 
 @Injectable({
   providedIn: 'root',

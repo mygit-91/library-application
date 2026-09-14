@@ -18,7 +18,7 @@
 
       <nav class="sidebar-menu">
         <ul>
-          @for (item of menuItems(); track item.id; let idx = $index) {
+          @for (item of menuItems(); track item.menuId; let idx = $index) {
             <li class="menu-item-wrapper">
               <button
                 class="menu-btn"
@@ -33,13 +33,19 @@
               <ul class="submenu" [class.show]="item.isOpen">
                 @for (sub of item.subMenu; track sub.title) {
                   <li>
-                    <a
-                      [routerLink]="[sub.route]"
-                      routerLinkActive="active-sub-link"
-                      (click)="closeMobileMenu()"
-                    >
-                      {{ sub.title }}
-                    </a>
+                    @if (sub.route === 'logout') {
+                      <a (click)="logout()" style="cursor: pointer">
+                        {{ sub.title }}
+                      </a>
+                    } @else {
+                      <a
+                        [routerLink]="[sub.route]"
+                        routerLinkActive="active-sub-link"
+                        (click)="closeMobileMenu()"
+                      >
+                        {{ sub.title }}
+                      </a>
+                    }
                   </li>
                 }
               </ul>
@@ -47,13 +53,6 @@
           }
         </ul>
       </nav>
-    </div>
-
-    <div class="sidebar-footer">
-      <button class="logout-btn" (click)="logout()">
-        <span class="menu-icon">🚪</span>
-        <span class="menu-text">Logout</span>
-      </button>
     </div>
   </aside>
 

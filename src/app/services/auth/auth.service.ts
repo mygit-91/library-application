@@ -2,8 +2,8 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import { LoginRequest, LoginResponse } from '../models/loging.model';
-import { UserState } from '../state/user.state';
+import { LoginRequest, LoginResponse } from '../../models/login.model';
+import { UserState } from '../../states/user.state';
 
 @Injectable({
   providedIn: 'root',

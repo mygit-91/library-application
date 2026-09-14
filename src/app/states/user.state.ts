@@ -5,7 +5,7 @@ import { UserSession } from '../models/user.model';
   providedIn: 'root', // Set to root for [Global Stage] can use every page
 })
 export class UserState {
-  private readonly STORAGE_KEY = 'user_session';
+  private readonly STORAGE_KEY = 'admin_session';
 
   // Get default from localStorage, If Refresh page
   private sessionState = signal<UserSession | null>(this.loadSession());
