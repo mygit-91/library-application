@@ -1,0 +1,315 @@
+/* นำเข้าฟอนต์สไตล์โมเดิร์นยอดนิยมระดับพรีเมียม */
+@import url('https://googleapis.com');
+
+:host {
+  /* กำหนดโทนสีอ่อน (Light Palette) */
+  --sidebar-bg: #ffffff;
+  --sidebar-hover: #f1f5f9;
+  --sidebar-active: #2563eb;
+  --sidebar-active-bg: #eff6ff;
+  --border-color: #e2e8f0;
+
+  --text-primary: #0f172a;
+  --text-muted: #64748b;
+  --content-bg: #f8fafc;
+  --transition-speed: 0.25s;
+}
+
+.dashboard-container {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    'sidebar topnav'
+    'sidebar main';
+  height: 100vh;
+  /* เรียกใช้ฟอนต์ตัวใหม่ที่ดูพรีเมียมขึ้น */
+  font-family:
+    'Plus Jakarta Sans',
+    'Noto Sans Thai',
+    system-ui,
+    -apple-system,
+    sans-serif;
+  background-color: var(--content-bg);
+}
+
+.mobile-navbar {
+  display: none;
+}
+
+/* 💎 ปรับปรุง Sidebar เป็นสีขาว/โทนอ่อนแบบคลีน */
+.sidebar {
+  grid-area: sidebar;
+  background-color: var(--sidebar-bg);
+  color: var(--text-primary);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-right: 1px solid var(--border-color);
+  z-index: 100;
+  box-shadow: 1px 0 10px rgba(0, 0, 0, 0.02);
+}
+
+.sidebar-top-section {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.sidebar-header {
+  padding: 1.75rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.sidebar-header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: var(--text-primary);
+}
+
+.logo-icon {
+  font-size: 1.6rem;
+}
+.sidebar-menu {
+  padding: 1.5rem 0.75rem;
+}
+.sidebar-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.menu-item-wrapper {
+  margin-bottom: 0.4rem;
+}
+
+/* ปุ่มหัวข้อหลักโทนสีอ่อน */
+.menu-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0.85rem 1.25rem;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+  border-radius: 8px;
+  transition: all var(--transition-speed) ease;
+}
+
+.menu-btn:hover {
+  background-color: var(--sidebar-hover);
+  color: var(--text-primary);
+}
+
+/* ตอนเปิดเมนูกางออก */
+.active-menu {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.menu-icon {
+  margin-right: 0.85rem;
+  font-size: 1.2rem;
+}
+.menu-text {
+  flex: 1;
+}
+.arrow {
+  font-size: 0.65rem;
+  transition: transform var(--transition-speed);
+  color: var(--text-muted);
+}
+.arrow.rotated {
+  transform: rotate(180deg);
+  color: var(--sidebar-active);
+}
+
+/* เมนูย่อยครอบสไตล์นุ่มนวล */
+.submenu {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+  list-style: none;
+  padding-left: 0;
+  margin-top: 0.2rem;
+  border-left: 2px solid var(--border-color);
+  margin-left: 2.1rem;
+}
+
+.submenu.show {
+  max-height: 250px;
+}
+
+.submenu li a {
+  display: block;
+  padding: 0.65rem 1rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 400;
+  border-radius: 6px;
+  transition: all var(--transition-speed);
+}
+
+.submenu li a:hover {
+  color: var(--sidebar-active);
+  background-color: var(--sidebar-hover);
+  padding-left: 1.25rem;
+}
+
+/* ลิงก์ของหน้าย่อยที่ถูกเลือกใช้งานอยู่จริง */
+.active-sub-link {
+  color: var(--sidebar-active) !important;
+  font-weight: 600 !important;
+  background-color: var(--sidebar-active-bg) !important;
+}
+
+/* 🚪 โซนปุ่มออกจากระบบด้านล่างสุดของบาร์ */
+.sidebar-footer {
+  padding: 1.25rem 0.75rem;
+  border-top: 1px solid var(--border-color);
+  background-color: #fafafa;
+}
+
+.logout-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0.85rem 1.25rem;
+  background-color: #fff;
+  color: #dc2626;
+  border: 1px solid #fee2e2;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-speed);
+}
+
+.logout-btn:hover {
+  background-color: #dc2626;
+  color: white;
+  border-color: #dc2626;
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.15);
+}
+
+/* ส่วนขวาหน้าเนื้อหาหลัก */
+.main-content {
+  grid-area: main;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.top-navbar {
+  grid-area: topnav;
+  height: 70px;
+  background-color: #ffffff;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+}
+
+.page-title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  background-color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  border: 1px solid var(--border-color);
+}
+
+.avatar {
+  font-size: 1.1rem;
+}
+.username {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #475569;
+}
+.content-body {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+}
+
+/* 📱 Responsive สำหรับจอมือถือ */
+@media (max-width: 992px) {
+  .dashboard-container {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto 1fr;
+    grid-template-areas: 'mobilenav' 'topnav' 'main';
+  }
+
+  .mobile-navbar {
+    grid-area: mobilenav;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.25rem;
+    background-color: #ffffff;
+    color: var(--text-primary);
+    height: 65px;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .mobile-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .mobile-logo h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .mobile-menu-toggle {
+    background-color: var(--sidebar-hover);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    padding: 0.5rem 0.85rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 65px;
+    left: -290px;
+    width: 280px;
+    height: calc(100vh - 65px);
+    transition: left var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.05);
+  }
+
+  .sidebar.mobile-show {
+    left: 0;
+  }
+  .top-navbar {
+    padding: 0 1.25rem;
+    height: 60px;
+  }
+  .content-body {
+    padding: 1.25rem;
+  }
+}

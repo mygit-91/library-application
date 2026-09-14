@@ -1,0 +1,140 @@
+<div class="login-container">
+  <div class="login-card">
+    <div class="login-header">
+      <h2>Administrator</h2>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+      <!-- Username -->
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input
+          type="text"
+          id="username"
+          formControlName="username"
+          placeholder="username"
+          [ngClass]="{ 'is-invalid': f['username'].touched && f['username'].errors }"
+        />
+
+        <!-- Validation -->
+        @if (f['username'].touched && f['username'].errors) {
+          <div class="error-text">
+            @if (f['username'].errors['required']) {
+              <span>Please enter username</span>
+            }
+            @if (f['username'].errors['minlength']) {
+              <span>Username must be at least 3 character</span>
+            }
+          </div>
+        }
+      </div>
+
+      <!-- Password -->
+      <div class="form-group">
+        <label for="password">Password</label>
+        <div class="password-wrapper">
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            id="password"
+            formControlName="password"
+            placeholder="passowrd"
+            [ngClass]="{ 'is-invalid': f['password'].touched && f['password'].errors }"
+          />
+          <button
+            type="button"
+            class="toggle-password-btn"
+            (click)="togglePasswordVisibility()"
+            [attr.aria-label]="showPassword ? 'Hide password' : 'Show passowrd'"
+          >
+            <!-- Hide/Show Password -->
+            @if (!showPassword) {
+              <svg
+                xmlns="http://w3.org"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            } @else {
+              <svg
+                xmlns="http://w3.org"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"
+                ></path>
+                <line x1="1" y1="1" x2="23" y2="23"></line>
+              </svg>
+            }
+          </button>
+        </div>
+
+        @if (f['password'].touched && f['password'].errors) {
+          <div class="error-text">
+            @if (f['password'].errors['required']) {
+              <span>Please enter password</span>
+            }
+            @if (f['password'].errors['minlength']) {
+              <span>Password must be at least 6 character</span>
+            }
+          </div>
+        }
+      </div>
+
+      <!-- @if Display Error From API -->
+      @if (errorMessage()) {
+        <div class="api-error-alert">
+          <svg
+            xmlns="http://w3.org"
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+          <span>{{ errorMessage() }}</span>
+        </div>
+      }
+
+      <!-- Forgot Password -->
+      <div class="form-options">
+        <label class="remember-me"></label>
+        <a href="#" class="forgot-password" onclick="return false;">Forgot Password?</a>
+      </div>
+
+      <!-- Login Button -->
+      <button type="submit" class="btn-login" [disabled]="isLoading">
+        @if (!isLoading) {
+          <span>Login</span>
+        } @else {
+          <span class="spinner">Loading...</span>
+        }
+      </button>
+    </form>
+
+    <div class="login-footer">
+      <p>No Account? <a href="#" onclick="return false;">Register</a></p>
+    </div>
+  </div>
+</div>

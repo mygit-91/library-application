@@ -1,0 +1,382 @@
+:host {
+  display: block;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  /* background-color: #f3f4f6; */
+  color: #1f2937;
+  min-height: 100vh;
+}
+
+.container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem;
+}
+
+/* --- ส่วนหัวเว็บจัดวางกระจายซ้าย-ขวา แบบ Responsive --- */
+.header-panel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap; /* ยอมให้ตกบรรทัดเมื่อพื้นที่ไม่พอ */
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.page-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* กล่องควบคุมการค้นหา (ดันชิดขวาบนคอม) */
+.search-wrapper {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  width: 100%;
+  max-width: 700px; /* จำกัดการขยายบนจอคอมใหญ่ */
+}
+
+.filter-select {
+  padding: 0.65rem 0.8rem;
+  font-size: 0.95rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background-color: #ffffff;
+  cursor: pointer;
+  outline: none;
+  min-width: 150px;
+}
+
+/* มัดรวมช่อง Input และ ปุ่มกด Search ให้อยู่ในแถวเดียวกันอย่างสวยงาม */
+.input-group {
+  display: flex;
+  flex-grow: 1;
+  gap: 0.5rem;
+}
+
+.search-input {
+  flex-grow: 1;
+  width: 100%;
+  padding: 0.65rem 1rem;
+  font-size: 0.95rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  outline: none;
+}
+
+.search-input:focus,
+.filter-select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.btn-search {
+  background-color: #2563eb;
+  color: #ffffff;
+  border: none;
+  padding: 0.65rem 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  white-space: nowrap; /* ตัวหนังสือไม่หักขึ้นบรรทัดใหม่ */
+  transition: background-color 0.15s ease;
+}
+
+.btn-search:hover {
+  background-color: #1d4ed8;
+}
+
+.btn-clear {
+  background-color: #6b7280;
+  color: #ffffff;
+  border: none;
+  padding: 0.65rem 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  white-space: nowrap; /* ตัวหนังสือไม่หักขึ้นบรรทัดใหม่ */
+  transition: background-color 0.15s ease;
+}
+
+.btn-clear:hover {
+  background-color: #4b5563;
+}
+
+/* --- Book Grid (Responsive คอลัมน์ขยายตามสัดส่วนจออัตโนมัติ) --- */
+.book-grid {
+  display: grid;
+  /* จอมือถือจะกว้างเต็มที่ ขยับเป็น 2, 3, 4 คอลัมน์ตามความกว้างอุปกรณ์ */
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+.book-card {
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.book-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.book-cover-wrapper {
+  position: relative;
+  width: 100%;
+  padding-top: 130px; /* อัตราส่วนความกว้างต่อความสูงของปกหนังสือ */
+  background-color: #e5e7eb;
+}
+
+.book-card-cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.badge {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  background-color: rgba(37, 99, 235, 0.95);
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.6rem;
+  border-radius: 50px;
+}
+
+.book-card-info {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.book-card-title {
+  font-size: 1.1rem;
+  margin: 0 0 0.5rem 0;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.book-card-author {
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin: 0 0 0.5rem 0;
+}
+
+.book-card-stock {
+  font-size: 0.85rem;
+  color: #4b5563;
+  margin-bottom: 1.25rem;
+}
+
+.book-card-footer {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.book-card-price {
+  font-weight: 700;
+  color: #10b981;
+}
+
+.view-btn {
+  background-color: #f3f4f6;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.no-data {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 4rem 1rem;
+  background: white;
+  border-radius: 12px;
+  color: #6b7280;
+}
+
+/* --- POPUP MODAL STYLES (รองรับ Scrollbar ภายในกรณีจอมือถือเตี้ย) --- */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 650px;
+  max-height: 90vh; /* บังคับไม่ให้โมดอลทะลุขอบจอแนวตั้ง */
+  position: relative;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.close-icon-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: #9ca3af;
+  z-index: 10;
+}
+
+.modal-body {
+  display: flex;
+  gap: 1.5rem;
+  padding: 2rem;
+  overflow-y: auto; /* เพิ่ม Scroll เฉพาะตรงเนื้อหาเมื่อเปิดบนมือถือ */
+}
+
+.modal-left {
+  flex: 0 0 180px;
+}
+
+.modal-cover {
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.modal-right {
+  flex-grow: 1;
+}
+
+.modal-title {
+  font-size: 1.4rem;
+  margin: 0.5rem 0;
+  padding-right: 1.5rem; /* ป้องกันข้อความทับปุ่มกากบาท */
+}
+
+.modal-detail {
+  font-size: 0.9rem;
+  color: #4b5563;
+  margin: 0.25rem 0;
+}
+
+.modal-price {
+  font-size: 1.2rem;
+  color: #10b981;
+  font-weight: bold;
+  margin: 0.75rem 0;
+}
+
+.modal-description h3 {
+  font-size: 1.05rem;
+  margin-bottom: 0.5rem;
+}
+
+.modal-description p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #4b5563;
+}
+
+.modal-footer {
+  padding: 1rem 2rem;
+  background: #f9fafb;
+  display: flex;
+  justify-content: flex-end;
+  border-top: 1px solid #e5e7eb;
+}
+
+.close-btn {
+  background: #4b5563;
+  color: white;
+  border: none;
+  padding: 0.5rem 1.25rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* --- MEDIA QUERIES สำหรับแท็บเล็ตและสมาร์ทโฟน --- */
+
+/* หน้าจอกลาง/เล็ก (ต่ำกว่า 768px เช่น Tablet และ Mobile) */
+@media (max-width: 768px) {
+  .header-panel {
+    flex-direction: column; /* เปลี่ยนชื่อร้านอยู่บรรทัดบน ชุดค้นหาอยู่บรรทัดล่าง */
+    align-items: flex-start;
+  }
+
+  .search-wrapper {
+    max-width: 100%;
+  }
+
+  .modal-body {
+    flex-direction: column; /* เปลี่ยนจากแนวนอนเป็นแนวตั้งซ้อนกัน */
+    align-items: center;
+    padding: 1.5rem;
+  }
+
+  .modal-left {
+    flex: 0 0 auto;
+    width: 140px; /* ย่อขนาดรูปลงเพื่อให้เหลือพื้นที่อ่านเนื้อหาด้านล่าง */
+  }
+
+  .modal-right {
+    width: 100%;
+  }
+}
+
+/* หน้าจอมือถือขนาดเล็กมาก (ต่ำกว่า 480px) */
+@media (max-width: 480px) {
+  .search-wrapper {
+    flex-direction: column; /* แยกตัวเลือกประเภท กับ ช่อง Input ให้อยู่คนละแถว */
+    align-items: stretch;
+  }
+
+  .filter-select {
+    width: 100%;
+  }
+
+  .input-group {
+    width: 100%;
+  }
+
+  .modal-footer {
+    padding: 0.75rem 1.5rem;
+  }
+
+  .close-btn {
+    width: 100%; /* ปุ่มปิดกว้างเต็มจอสำหรับมือถือ */
+    text-align: center;
+  }
+}

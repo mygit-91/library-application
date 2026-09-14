@@ -1,0 +1,73 @@
+<div class="dashboard-container">
+  <header class="mobile-navbar">
+    <div class="mobile-logo">
+      <span class="logo-icon">📘</span>
+      <h3>Library Menu</h3>
+    </div>
+    <button class="mobile-menu-toggle" (click)="toggleMobileMenu()">
+      {{ isMobileMenuOpen() ? '✕ Close' : '☰ Menu' }}
+    </button>
+  </header>
+
+  <aside class="sidebar" [class.mobile-show]="isMobileMenuOpen()">
+    <div class="sidebar-top-section">
+      <div class="sidebar-header">
+        <span class="logo-icon">📘</span>
+        <h3>Library Menu</h3>
+      </div>
+
+      <nav class="sidebar-menu">
+        <ul>
+          @for (item of menuItems(); track item.id; let idx = $index) {
+            <li class="menu-item-wrapper">
+              <button
+                class="menu-btn"
+                [class.active-menu]="item.isOpen"
+                (click)="toggleSubMenu(idx)"
+              >
+                <span class="menu-icon">{{ item.icon }}</span>
+                <span class="menu-text">{{ item.title }}</span>
+                <span class="arrow" [class.rotated]="item.isOpen">▼</span>
+              </button>
+
+              <ul class="submenu" [class.show]="item.isOpen">
+                @for (sub of item.subMenu; track sub.title) {
+                  <li>
+                    <a
+                      [routerLink]="[sub.route]"
+                      routerLinkActive="active-sub-link"
+                      (click)="closeMobileMenu()"
+                    >
+                      {{ sub.title }}
+                    </a>
+                  </li>
+                }
+              </ul>
+            </li>
+          }
+        </ul>
+      </nav>
+    </div>
+
+    <div class="sidebar-footer">
+      <button class="logout-btn" (click)="logout()">
+        <span class="menu-icon">🚪</span>
+        <span class="menu-text">Logout</span>
+      </button>
+    </div>
+  </aside>
+
+  <div class="main-content">
+    <header class="top-navbar">
+      <div class="page-title">Library Management</div>
+      <div class="user-profile">
+        <span class="avatar">👤</span>
+        <span class="username">Administrator</span>
+      </div>
+    </header>
+
+    <main class="content-body">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

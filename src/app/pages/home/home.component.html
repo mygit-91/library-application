@@ -1,0 +1,83 @@
+<div class="container">
+  <header class="header-panel">
+    <h1 class="page-title">📚 Search Books</h1>
+
+    <!-- Search -->
+    <div class="search-wrapper">
+      <select
+        [ngModel]="searchFilter()"
+        (ngModelChange)="onFilterChange($event)"
+        class="filter-select"
+      >
+        <option value="all">🔎 All</option>
+        <option value="title">📖 Book Title</option>
+        <option value="author">✍️ Author</option>
+        <option value="category">🏷️ Category</option>
+        <option value="isbn">🆔 ISBN</option>
+      </select>
+
+      <div class="input-group">
+        <input
+          type="text"
+          [ngModel]="searchText()"
+          (ngModelChange)="onQueryChange($event)"
+          (keyup.enter)="onSearch()"
+          placeholder="Search text..."
+          class="search-input"
+        />
+        <button class="btn-search" (click)="onSearch()">Search</button>
+        <button class="btn-clear" (click)="onClear()">Clear</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Display List Books -->
+  <main class="book-grid">
+    @for (book of listBooks(); track book.bookId) {
+      <div class="book-card" (click)="openPopup(book.bookId)">
+        <div class="book-cover-wrapper">
+          <img [src]="" [alt]="" loading="lazy" class="book-card-cover" />
+          <span class="badge">{{ book.categoryName }}</span>
+        </div>
+        <div class="book-card-info">
+          <h2 class="book-card-title">{{ book.title }}</h2>
+          <p class="book-card-author">✍️ {{ book.author }}</p>
+          <div class="book-card-stock">📦 Available: {{ book.availableCopies }}</div>
+          <div class="book-card-footer">
+            <span class=""></span>
+            <button class="view-btn">Details 👁️</button>
+          </div>
+        </div>
+      </div>
+    } @empty {
+      <div class="no-data"><p>🔍 No book found.</p></div>
+    }
+  </main>
+
+  <!-- ==================== POPUP MODAL ==================== -->
+  @if (selectedBook(); as book) {
+    <div class="modal-backdrop" (click)="closePopup()">
+      <div class="modal-content" (click)="$event.stopPropagation()">
+        <button class="close-icon-btn" (click)="closePopup()">&times;</button>
+        <div class="modal-body">
+          <div class="modal-left">
+            <img [src]="" [alt]="book.title" class="modal-cover" />
+          </div>
+          <div class="modal-right">
+            <span class="badge">{{ book.categoryName }}</span>
+            <h2 class="modal-title">{{ book.title }}</h2>
+            <p class="modal-detail"><strong>ISBN:</strong> {{ book.isbn }}</p>
+            <p class="modal-detail"><strong>Author:</strong> {{ book.author }}</p>
+            <p class="modal-detail"><strong>Publisher:</strong> {{ book.publisher }}</p>
+            <p class="modal-detail"><strong>Publish Year:</strong> {{ book.publishYear }}</p>
+            <p class="modal-detail"><strong>Available:</strong> {{ book.availableCopies }}</p>
+            <p class="modal-detail"><strong>Location:</strong> {{ book.location }}</p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="close-btn" (click)="closePopup()">Close</button>
+        </div>
+      </div>
+    </div>
+  }
+</div>
