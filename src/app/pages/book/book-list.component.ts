@@ -3,21 +3,25 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { BookService } from '../../services/book/book.service';
 import { AuthService } from '../../services/auth/auth.service';
-import { GetBookRequest, Books } from '../../models/book.model';
+import { GetBookListRequest, Books } from '../../models/book.model';
+import { EditBookComponent } from './edit-book.component';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { DeleteDialogComponent } from '../commons/delete-dialog.component';
 
 @Component({
   selector: 'app-book-list',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, MatDialogModule, MatButtonModule],
   templateUrl: './book-list.component.html',
   styleUrls: ['./book-list.component.css'],
 })
 export class BookListComponent {
   private authService = inject(AuthService);
   private bookService = inject(BookService);
+  private dialog = inject(MatDialog);
 
   listBooks = signal<Books[]>([]);
-
   searchFilter = signal<string>('all');
   searchText = signal<string>('');
   selectedBookId = signal<string | null>(null);
@@ -34,19 +38,19 @@ export class BookListComponent {
     if (this.searchFilter() != 'all' && !this.searchText().trim()) {
       window.alert('Please enter value for searching');
     } else {
-      const request: GetBookRequest = {
+      const input: GetBookListRequest = {
         searchTopic: this.searchFilter(),
         searchText: this.searchText().trim(),
         isStaff: this.authService.isLoggedIn(),
       };
 
-      this.bookService.getBooks(request).subscribe({
-        next: (response) => {
-          console.log('Response from API2:', response);
-          this.listBooks.set(response);
+      this.bookService.getBookList(input).subscribe({
+        next: (data) => {
+          // Update book list
+          this.listBooks.set(data);
         },
         error: (error) => {
-          window.alert(error?.message || 'Get data failed');
+          window.alert(error?.message || 'Get data failed!');
         },
       });
     }
@@ -58,6 +62,7 @@ export class BookListComponent {
     this.listBooks.set([]);
   }
 
+  // Open detail dialog
   selectedBook = computed(() => {
     const id = this.selectedBookId();
     return id !== null ? this.listBooks().find((b) => b.bookId === id) : null;
@@ -69,5 +74,49 @@ export class BookListComponent {
 
   closePopup(): void {
     this.selectedBookId.set(null);
+  }
+
+  // Open edit dialog
+  openEditPopup(bookId: string) {
+    const dialogRef = this.dialog.open(EditBookComponent, {
+      width: '70vw',
+      height: 'cal(100vh-10px)',
+      maxWidth: '100vw',
+      maxHeight: '100vh',
+      data: { bookId: bookId },
+    });
+
+    // On dialog response
+    dialogRef.afterClosed().subscribe((updatedBook) => {
+      if (updatedBook) {
+        // Update book in list
+        this.listBooks.update((list) =>
+          list.map((book) => (book.bookId === updatedBook.bookId ? updatedBook : book)),
+        );
+      }
+    });
+  }
+
+  // Open confirm delete dialog
+  deleteBook(book: Books) {
+    const dialogRef = this.dialog.open(DeleteDialogComponent, {
+      width: '500px',
+      data: { message: `Do you want to delete the book "${book.title}"?` },
+    });
+
+    dialogRef.afterClosed().subscribe((isConfirm) => {
+      if (isConfirm) {
+        this.bookService.deleteBook(book.bookId).subscribe({
+          next: (message) => {
+            // Update book list
+            this.listBooks.update((list) => list.filter((item) => item.bookId !== book.bookId));
+            window.alert(message);
+          },
+          error: (error) => {
+            window.alert(error?.message || 'Delete data failed!');
+          },
+        });
+      }
+    });
   }
 }

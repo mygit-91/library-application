@@ -3,11 +3,15 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import {
-  GetBookRequest,
+  GetBookByIdResponse,
+  GetBookListRequest,
   GetBookListResponse,
   Books,
-  AddNewBook,
-  AddNewBookResponse,
+  AddBookRequest,
+  AddBookResponse,
+  UpdateBookRequest,
+  UpdateBookResponse,
+  DeleteBookResponse,
 } from '../../models/book.model';
 
 @Injectable({
@@ -16,28 +20,70 @@ import {
 export class BookService {
   private http = inject(HttpClient);
 
-  getBooks(credentials: GetBookRequest): Observable<Books[]> {
-    return this.http.post<GetBookListResponse>('/api/books/get', credentials).pipe(
+  getBookById(bookId: string): Observable<Books[]> {
+    return this.http.get<GetBookByIdResponse>('/api/book/get-byid?id=' + bookId).pipe(
       map((response) => {
-        console.log('API Response:', response);
+        console.log('API Sucess Response:', response);
         return response.data;
       }),
       catchError((error: HttpErrorResponse) => {
-        //console.error('API Error:', error.message);
+        console.error('API Error Response:', error);
         const errorMessage = error.error?.message || error.message || 'Internal Error';
         return throwError(() => new Error(errorMessage));
       }),
     );
   }
 
-  addNewBooks(credentials: AddNewBook): Observable<AddNewBookResponse> {
-    return this.http.post<AddNewBookResponse>('/api/books/add', credentials).pipe(
+  getBookList(input: GetBookListRequest): Observable<Books[]> {
+    return this.http.post<GetBookListResponse>('/api/book/list', input).pipe(
       map((response) => {
-        console.log('API Response:', response);
-        return response;
+        // console.log('API Sucess Response:', response);
+        return response.data;
       }),
       catchError((error: HttpErrorResponse) => {
-        //console.error('API Error:', error.message);
+        // console.error('API Error Response:', error);
+        const errorMessage = error.error?.message || error.message || 'Internal Error';
+        return throwError(() => new Error(errorMessage));
+      }),
+    );
+  }
+
+  addBook(input: AddBookRequest): Observable<string> {
+    return this.http.post<AddBookResponse>('/api/book/add', input).pipe(
+      map((response) => {
+        // console.log('API Sucess Response:', response);
+        return response.message;
+      }),
+      catchError((error: HttpErrorResponse) => {
+        // console.error('API Error Response:', error);
+        const errorMessage = error.error?.message || error.message || 'Internal Error';
+        return throwError(() => new Error(errorMessage));
+      }),
+    );
+  }
+
+  updateBook(input: UpdateBookRequest): Observable<string> {
+    return this.http.post<UpdateBookResponse>('/api/book/update', input).pipe(
+      map((response) => {
+        console.log('API Sucess Response:', response);
+        return response.message;
+      }),
+      catchError((error: HttpErrorResponse) => {
+        console.error('API Error Response:', error);
+        const errorMessage = error.error?.message || error.message || 'Internal Error';
+        return throwError(() => new Error(errorMessage));
+      }),
+    );
+  }
+
+  deleteBook(bookId: string): Observable<string> {
+    return this.http.delete<DeleteBookResponse>('/api/book/delete?id=' + bookId).pipe(
+      map((response) => {
+        // console.log('API Sucess Response:', response);
+        return response.message;
+      }),
+      catchError((error: HttpErrorResponse) => {
+        // console.error('API Error Response:', error);
         const errorMessage = error.error?.message || error.message || 'Internal Error';
         return throwError(() => new Error(errorMessage));
       }),

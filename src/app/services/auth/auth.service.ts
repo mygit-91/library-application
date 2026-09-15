@@ -13,14 +13,16 @@ export class AuthService {
   private userState = inject(UserState);
 
   // Login
-  login(credentials: LoginRequest): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>('/api/staff/login', credentials).pipe(
+  login(input: LoginRequest): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>('/api/staff/login', input).pipe(
       tap((response) => {
+        // console.log('API Sucess Response:', response);
         if (response && response.status == 200) {
           this.userState.saveSession(response.data);
         }
       }),
       catchError((error: HttpErrorResponse) => {
+        // console.error('API Error Response:', error);
         const errorMessage = error.error?.message || error.message || 'Internal Error';
         return throwError(() => new Error(errorMessage));
       }),

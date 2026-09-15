@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { inject } from '@angular/core';
 import { AuthService } from '../../services/auth/auth.service';
+import { UserState } from '../../states/user.state';
 
 interface SubMenuItem {
   subMenuId: number;
@@ -29,13 +30,16 @@ interface MenuItem {
 export class DashboardComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
+  private userState = inject(UserState);
+
+  user = this.userState.currentUser();
 
   isMobileMenuOpen = signal<boolean>(false);
 
   menuItems = signal<MenuItem[]>([
     {
       menuId: 1,
-      title: 'My Profile',
+      title: this.user?.firstName || '',
       icon: '👤',
       isOpen: false,
       subMenu: [

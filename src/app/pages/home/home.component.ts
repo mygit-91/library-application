@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { BookService } from '../../services/book/book.service';
 import { AuthService } from '../../services/auth/auth.service';
-import { GetBookRequest, Books } from '../../models/book.model';
+import { GetBookListRequest, Books } from '../../models/book.model';
 
 @Component({
   selector: 'app-home',
@@ -17,11 +17,9 @@ export class HomeComponent {
   private bookService = inject(BookService);
 
   listBooks = signal<Books[]>([]);
-
   searchFilter = signal<string>('all');
   searchText = signal<string>('');
   selectedBookId = signal<string | null>(null);
-  defaultBookIcon: string = 'public/icons/book-placeholder.svg';
 
   onFilterChange(newFilter: string): void {
     this.searchFilter.set(newFilter);
@@ -35,18 +33,19 @@ export class HomeComponent {
     if (this.searchFilter() != 'all' && !this.searchText().trim()) {
       window.alert('Please enter value for searching');
     } else {
-      const request: GetBookRequest = {
+      const input: GetBookListRequest = {
         searchTopic: this.searchFilter(),
         searchText: this.searchText().trim(),
         isStaff: this.authService.isLoggedIn(),
       };
 
-      this.bookService.getBooks(request).subscribe({
-        next: (response) => {
-          this.listBooks.set(response);
+      this.bookService.getBookList(input).subscribe({
+        next: (data) => {
+          // Update book list
+          this.listBooks.set(data);
         },
         error: (error) => {
-          window.alert(error?.message || 'Get data failed');
+          window.alert(error?.message || 'Get data failed!');
         },
       });
     }
@@ -58,6 +57,7 @@ export class HomeComponent {
     this.listBooks.set([]);
   }
 
+  // Open detail dialog
   selectedBook = computed(() => {
     const id = this.selectedBookId();
     return id !== null ? this.listBooks().find((b) => b.bookId === id) : null;

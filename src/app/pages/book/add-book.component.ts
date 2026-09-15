@@ -41,9 +41,9 @@ export class AddBookComponent {
 
   onSubmit(): void {
     if (this.bookForm.valid) {
-      this.bookService.addNewBooks(this.bookForm.value).subscribe({
+      this.bookService.addBook(this.bookForm.value).subscribe({
         next: (response) => {
-          alert(response.message + ', Book ID: ' + response.data.bookId);
+          alert(response);
 
           this.bookForm.reset({
             isActive: true,
@@ -53,11 +53,20 @@ export class AddBookComponent {
           });
         },
         error: (error) => {
-          window.alert(error?.message || 'Get data failed');
+          window.alert(error?.message || 'Save data failed!');
         },
       });
     } else {
       this.bookForm.markAllAsTouched();
     }
+  }
+
+  onClear() {
+    this.bookForm.reset({
+      isActive: true,
+      availableCopies: '0',
+      totalCopies: '0',
+      categoryId: '',
+    });
   }
 }

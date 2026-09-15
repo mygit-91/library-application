@@ -7,7 +7,6 @@ import { DashboardComponent } from './pages/admin/dashboard.component';
 import { WelcomeComponent } from './pages/admin/welcome.component';
 import { BookListComponent } from './pages/book/book-list.component';
 import { AddBookComponent } from './pages/book/add-book.component';
-import { EditBookComponent } from './pages/book/edit-book.component';
 import { ManageCategoriesComponent } from './pages/categories/manage-categories.component';
 import { BorrowListComponent } from './pages/borrowing/borrow-list.component';
 import { BorrowBookComponent } from './pages/borrowing/borrow-book.component';
@@ -28,7 +27,6 @@ export const routes: Routes = [
       { path: '', component: WelcomeComponent },
       { path: 'book-list', component: BookListComponent },
       { path: 'add-book', component: AddBookComponent },
-      { path: 'edit-book', component: EditBookComponent },
       { path: 'manage-categories', component: ManageCategoriesComponent },
       { path: 'borrow-list', component: BorrowListComponent },
       { path: 'borrow-book', component: BorrowBookComponent },

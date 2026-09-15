@@ -1,6 +1,6 @@
 <div class="container">
   <header class="header-panel">
-    <h1 class="page-title">📚 Search Books</h1>
+    <h1 class="page-title">📚 Book List</h1>
 
     <!-- Search -->
     <div class="search-wrapper">
@@ -34,9 +34,9 @@
   <!-- Display List Books -->
   <main class="book-grid">
     @for (book of listBooks(); track book.bookId) {
-      <div class="book-card" (click)="openPopup(book.bookId)">
+      <div class="book-card">
         <div class="book-cover-wrapper">
-          <img [src]="" [alt]="" loading="lazy" class="book-card-cover" />
+          <img [src]="" [alt]="book.title" loading="lazy" class="book-card-cover" />
           <span class="badge">{{ book.categoryName }}</span>
         </div>
         <div class="book-card-info">
@@ -44,8 +44,7 @@
           <p class="book-card-author">✍️ {{ book.author }}</p>
           <div class="book-card-stock">📦 Available: {{ book.availableCopies }}</div>
           <div class="book-card-footer">
-            <span class=""></span>
-            <button class="view-btn">Details 👁️</button>
+            <span class="action-link" (click)="openPopup(book.bookId)">👁️ Details</span>
           </div>
         </div>
       </div>
@@ -54,7 +53,7 @@
     }
   </main>
 
-  <!-- ==================== POPUP MODAL ==================== -->
+  <!-- ==================== Popup Modal Detail ==================== -->
   @if (selectedBook(); as book) {
     <div class="modal-backdrop" (click)="closePopup()">
       <div class="modal-content" (click)="$event.stopPropagation()">
@@ -70,12 +69,11 @@
             <p class="modal-detail"><strong>Author:</strong> {{ book.author }}</p>
             <p class="modal-detail"><strong>Publisher:</strong> {{ book.publisher }}</p>
             <p class="modal-detail"><strong>Publish Year:</strong> {{ book.publishYear }}</p>
+            <p class="modal-detail"><strong>total:</strong> {{ book.totalCopies }}</p>
             <p class="modal-detail"><strong>Available:</strong> {{ book.availableCopies }}</p>
             <p class="modal-detail"><strong>Location:</strong> {{ book.location }}</p>
+            <p class="modal-detail"><strong>Is Active:</strong> {{ book.isActive }}</p>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button class="close-btn" (click)="closePopup()">Close</button>
         </div>
       </div>
     </div>

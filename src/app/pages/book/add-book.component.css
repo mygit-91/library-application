@@ -24,6 +24,21 @@
   flex-direction: column;
 }
 
+.header-panel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap; /* ยอมให้ตกบรรทัดเมื่อพื้นที่ไม่พอ */
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.page-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin: 0;
+}
+
 label {
   font-weight: 600;
   margin-bottom: 0.4rem;

@@ -1,0 +1,95 @@
+/* กล่องครอบหลัก */
+.split-box {
+  padding: 28px;
+  background: #ffffff;
+  border-radius: 12px; /* โค้งมนนุ่มนวลแบบโมเดิร์น */
+  font-family: 'Prompt', 'Kanit', sans-serif;
+}
+
+/* ส่วนหัวข้อและเนื้อหา */
+.content-wrapper {
+  display: flex;
+  gap: 18px; /* เว้นระยะระหว่างไอคอนกับข้อความ */
+  align-items: flex-start;
+}
+
+/* ไอคอนแจ้งเตือนทรงกลมสีส้ม-แดงนุ่ม ๆ */
+.icon-badge {
+  background: #fef2f2; /* เปลี่ยนพื้นหลังเป็นแดงชมพูอ่อนมาก ๆ */
+  color: #ef4444; /* เปลี่ยนตัวไอคอน SVG เป็นสีแดงแจ้งเตือน */
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 22px;
+}
+
+/* การจัดกลุ่มข้อความ */
+.text-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.text-group h5 {
+  margin: 0;
+  font-size: 18px;
+  color: #1a202c;
+  font-weight: 600;
+}
+
+.text-group p {
+  margin: 0;
+  font-size: 14px;
+  color: #4a5568;
+  line-height: 1.6;
+}
+
+/* ส่วนแถวปุ่มด้านล่าง (ชิดขวาและเว้นระยะพอดี) */
+.button-split-row {
+  display: flex;
+  justify-content: flex-end; /* จัดปุ่มชิดขวา */
+  gap: 10px; /* ให้ปุ่มอยู่ใกล้กันอย่างสวยงาม */
+  margin-top: 28px;
+  padding-top: 18px;
+  border-top: 1px solid #f7fafc; /* เส้นคั่นบาง ๆ สบายตา */
+}
+
+/* ปุ่มยกเลิก */
+.btn-outline-secondary {
+  background: white;
+  border: 1px solid #e2e8f0;
+  padding: 10px 20px;
+  border-radius: 6px;
+  color: #4a5568;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-outline-secondary:hover {
+  background: #f7fafc;
+  border-color: #cbd5e0;
+  color: #2d3748;
+}
+
+/* ปุ่มยืนยันลบสีแดงเด่น */
+.btn-danger-pushed {
+  background: #e53e3e;
+  border: none;
+  padding: 10px 22px;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(229, 62, 62, 0.2);
+  transition: all 0.2s;
+}
+.btn-danger-pushed:hover {
+  background: #c53030;
+  box-shadow: 0 4px 12px rgba(229, 62, 62, 0.3);
+}

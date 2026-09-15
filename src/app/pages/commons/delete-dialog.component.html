@@ -1,0 +1,13 @@
+<div class="split-box">
+  <div class="content-wrapper">
+    <div class="icon-badge">⚠️</div>
+    <div class="text-group">
+      <h5>Confirm Delete</h5>
+      <p>{{ data.message }}</p>
+    </div>
+  </div>
+  <div class="button-split-row">
+    <button class="btn-outline-secondary" (click)="onNoClick()">Cancel</button>
+    <button class="btn-danger-pushed" (click)="onConfirmClick()">Delete</button>
+  </div>
+</div>
