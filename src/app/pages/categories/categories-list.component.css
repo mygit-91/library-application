@@ -10,7 +10,7 @@
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
-  padding: 4rem 1rem;
+  padding: 1.5rem 1rem;
 }
 
 /* --- ส่วนหัวเว็บจัดวางกระจายซ้าย-ขวา แบบ Responsive --- */
@@ -20,8 +20,8 @@
   align-items: center;
   flex-wrap: wrap; /* ยอมให้ตกบรรทัดเมื่อพื้นที่ไม่พอ */
   gap: 1.25rem;
-  margin-bottom: 2rem;
-  padding-bottom: 1.25rem;
+  /* margin-bottom: 2rem; */
+  padding-bottom: 3rem;
   border-bottom: 1px solid #e5e7eb;
 }
 
@@ -192,7 +192,7 @@
 .book-card-footer {
   margin-top: auto;
   display: flex;
-  justify-content: end;
+  justify-content: space-between;
   align-items: center;
 }
 
@@ -417,6 +417,89 @@
 }
 
 /* แถม: แยกสีเด่น ๆ ตามไอคอนเมื่อ Hover */
+
 .action-link:nth-child(1):hover {
-  color: #3182ce; /* รายละเอียด: สีน้ำเงิน */
+  color: #dd6b20; /* แก้ไข: สีส้ม */
+}
+
+.action-link:nth-child(2):hover {
+  color: #e53e3e; /* ลบ: สีแดง */
+}
+
+/* ///////////////////////////////////////////// */
+.table-container {
+  width: 100%;
+  overflow-x: auto; /* เปิด Scroll แนวนอนหากเปิดในหน้าจอมือถือที่เล็กมากๆ */
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  box-sizing: border-box;
+}
+
+/* ตั้งค่าตารางให้เต็มหน้าจอ */
+.responsive-table {
+  width: 100%;
+  border-collapse: collapse; /* ยุบเส้นขอบตารางให้เรียบเนียน */
+  text-align: left;
+}
+
+/* ตกแต่งแถวหัวตาราง */
+.responsive-table th {
+  background-color: #f0f5ff; /* สีเทาอมฟ้าอ่อนๆ ดูสะอาดตา */
+  color: #1d3557; /* ปรับสีตัวอักษรให้นุ่มนวลขึ้น */
+  font-weight: 600;
+  padding: 16px;
+  border-bottom: 2px solid #e5eaef; /* เส้นขอบด้านล่างสีอ่อนลงให้เข้ากัน */
+}
+
+/* ตกแต่งแถวข้อมูล */
+.responsive-table td {
+  padding: 16px;
+  border-bottom: 1px solid #dee2e6;
+  color: #212529;
+  vertical-align: middle;
+}
+
+/* เอฟเฟกต์เมื่อเอาเมาส์ไปชี้ที่แถว */
+.responsive-table tbody tr:hover {
+  background-color: #f1f3f5;
+}
+
+/* จัดการความกว้างและตำแหน่งของแต่ละคอลัมน์ */
+.col-id {
+  width: 150px;
+}
+
+.col-name {
+  width: 40%;
+  font-weight: 500;
+}
+
+/* ผลักหัวข้อและปุ่มจัดการข้อมูลไปขวาสุด */
+.col-actions {
+  width: 100px;
+  text-align: right;
+}
+
+/* ปรับแต่งปุ่มกดให้อยู่ในแนวนอนและเว้นระยะห่าง */
+.col-actions button {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-left: 8px; /* เว้นระยะห่างระหว่างปุ่มแก้ไขและปุ่มลบ */
+  transition: opacity 0.15s ease;
+}
+
+.col-actions button:hover {
+  opacity: 0.85;
+}
+
+/* ตกแต่งสถานะไม่มีข้อมูล */
+.empty-state {
+  text-align: center !important;
+  padding: 40px !important;
+  color: #6c757d;
 }

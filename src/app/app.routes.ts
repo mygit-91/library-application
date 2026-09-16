@@ -7,7 +7,10 @@ import { DashboardComponent } from './pages/admin/dashboard.component';
 import { WelcomeComponent } from './pages/admin/welcome.component';
 import { BookListComponent } from './pages/book/book-list.component';
 import { AddBookComponent } from './pages/book/add-book.component';
-import { ManageCategoriesComponent } from './pages/categories/manage-categories.component';
+
+import { CategoriesListComponent } from './pages/categories/categories-list.component';
+import { AddCategoriesComponent } from './pages/categories/add-categories.component';
+
 import { BorrowListComponent } from './pages/borrowing/borrow-list.component';
 import { BorrowBookComponent } from './pages/borrowing/borrow-book.component';
 import { BookReturnComponent } from './pages/borrowing/book-return.component';
@@ -27,7 +30,8 @@ export const routes: Routes = [
       { path: '', component: WelcomeComponent },
       { path: 'book-list', component: BookListComponent },
       { path: 'add-book', component: AddBookComponent },
-      { path: 'manage-categories', component: ManageCategoriesComponent },
+      { path: 'categories-list', component: CategoriesListComponent },
+      { path: 'add-categories', component: AddCategoriesComponent },
       { path: 'borrow-list', component: BorrowListComponent },
       { path: 'borrow-book', component: BorrowBookComponent },
       { path: 'book-return', component: BookReturnComponent },

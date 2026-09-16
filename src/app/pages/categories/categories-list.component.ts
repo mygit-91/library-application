@@ -1,30 +1,27 @@
 import { Component, computed, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { BookService } from '../../services/book/book.service';
-import { AuthService } from '../../services/auth/auth.service';
-import { GetBookListRequest, Books } from '../../models/book.model';
-import { EditBookComponent } from './edit-book.component';
+import { CategoriesService } from '../../services/categories/categories.service';
+import { Categories, GetCategoriesListRequest } from '../../models/categories.model';
+import { EditCategoriesComponent } from './edit-categories.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { DeleteDialogComponent } from '../commons/delete-dialog.component';
 
 @Component({
-  selector: 'app-book-list',
+  selector: 'app-categories-list',
   standalone: true,
   imports: [CommonModule, FormsModule, MatDialogModule, MatButtonModule],
-  templateUrl: './book-list.component.html',
-  styleUrls: ['./book-list.component.css'],
+  templateUrl: './categories-list.component.html',
+  styleUrls: ['./categories-list.component.css'],
 })
-export class BookListComponent {
-  private authService = inject(AuthService);
-  private bookService = inject(BookService);
+export class CategoriesListComponent {
+  private categoriesService = inject(CategoriesService);
   private dialog = inject(MatDialog);
 
-  listBooks = signal<Books[]>([]);
+  listCategories = signal<Categories[]>([]);
   searchFilter = signal<string>('all');
   searchText = signal<string>('');
-  selectedBookId = signal<string | null>(null);
 
   onFilterChange(newFilter: string): void {
     this.searchFilter.set(newFilter);
@@ -38,16 +35,15 @@ export class BookListComponent {
     if (this.searchFilter() != 'all' && !this.searchText().trim()) {
       window.alert('Please enter value for searching');
     } else {
-      const input: GetBookListRequest = {
+      const input: GetCategoriesListRequest = {
         searchTopic: this.searchFilter(),
         searchText: this.searchText().trim(),
-        isStaff: this.authService.isLoggedIn(),
       };
 
-      this.bookService.getBookList(input).subscribe({
+      this.categoriesService.getCategoriesList(input).subscribe({
         next: (response) => {
           // Update book list
-          this.listBooks.set(response);
+          this.listCategories.set(response);
         },
         error: (error) => {
           window.alert(error?.message || 'Get data failed!');
@@ -59,57 +55,45 @@ export class BookListComponent {
   onClear(): void {
     this.searchFilter.set('all');
     this.searchText.set('');
-    this.listBooks.set([]);
-  }
-
-  // Open detail dialog
-  selectedBook = computed(() => {
-    const id = this.selectedBookId();
-    return id !== null ? this.listBooks().find((b) => b.bookId === id) : null;
-  });
-
-  openDetatils(bookId: string): void {
-    this.selectedBookId.set(bookId);
-  }
-
-  closeDetatils(): void {
-    this.selectedBookId.set(null);
+    this.listCategories.set([]);
   }
 
   // Open edit dialog
-  onEdit(bookId: string) {
-    const dialogRef = this.dialog.open(EditBookComponent, {
+  onEdit(categoriesId: string) {
+    const dialogRef = this.dialog.open(EditCategoriesComponent, {
       width: '70vw',
       height: 'cal(100vh-10px)',
       maxWidth: '100vw',
       maxHeight: '100vh',
-      data: { bookId: bookId },
+      data: { categoriesId: categoriesId },
     });
 
     // On dialog response
     dialogRef.afterClosed().subscribe((updatedItem) => {
       if (updatedItem) {
         // Update book in list
-        this.listBooks.update((list) =>
-          list.map((item) => (item.bookId === updatedItem.bookId ? updatedItem : item)),
+        this.listCategories.update((list) =>
+          list.map((item) => (item.categoryId === updatedItem.categoryId ? updatedItem : item)),
         );
       }
     });
   }
 
   // Open confirm delete dialog
-  onDelete(book: Books) {
+  onDelete(categories: Categories) {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       width: '500px',
-      data: { message: `Do you want to delete the book "${book.title}"?` },
+      data: { message: `Do you want to delete the book "${categories.categoryName}"?` },
     });
 
     dialogRef.afterClosed().subscribe((isConfirm) => {
       if (isConfirm) {
-        this.bookService.deleteBook(book.bookId).subscribe({
+        this.categoriesService.deleteCategories(categories.categoryId).subscribe({
           next: (message) => {
             // Update book list
-            this.listBooks.update((list) => list.filter((item) => item.bookId !== book.bookId));
+            this.listCategories.update((list) =>
+              list.filter((item) => item.categoryId !== categories.categoryId),
+            );
             window.alert(message);
           },
           error: (error) => {

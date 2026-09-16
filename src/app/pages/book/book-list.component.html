@@ -44,9 +44,9 @@
           <p class="book-card-author">✍️ {{ book.author }}</p>
           <div class="book-card-stock">📦 Available: {{ book.availableCopies }}</div>
           <div class="book-card-footer">
-            <span class="action-link" (click)="openPopup(book.bookId)">👁️ Details</span>
-            <span class="action-link" (click)="openEditPopup(book.bookId)">✏️ Edit</span>
-            <span class="action-link" (click)="deleteBook(book)">🗑️ Delete</span>
+            <span class="action-link" (click)="openDetatils(book.bookId)">👁️ Details</span>
+            <span class="action-link" (click)="onEdit(book.bookId)">✏️ Edit</span>
+            <span class="action-link" (click)="onDelete(book)">🗑️ Delete</span>
           </div>
         </div>
       </div>
@@ -57,9 +57,9 @@
 
   <!-- ==================== Popup Modal Detail ==================== -->
   @if (selectedBook(); as book) {
-    <div class="modal-backdrop" (click)="closePopup()">
+    <div class="modal-backdrop" (click)="closeDetatils()">
       <div class="modal-content" (click)="$event.stopPropagation()">
-        <button class="close-icon-btn" (click)="closePopup()">&times;</button>
+        <button class="close-icon-btn" (click)="closeDetatils()">&times;</button>
         <div class="modal-body">
           <div class="modal-left">
             <img [src]="" [alt]="book.title" class="modal-cover" />

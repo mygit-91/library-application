@@ -63,7 +63,8 @@ export class DashboardComponent {
       icon: '🏷️',
       isOpen: false,
       subMenu: [
-        { subMenuId: 5, title: 'Manage Categories', route: 'manage-categories', menuId: 3 },
+        { subMenuId: 5, title: 'Categories List', route: 'categories-list', menuId: 3 },
+        { subMenuId: 6, title: 'Add Categories', route: 'add-categories', menuId: 3 },
       ],
     },
     {
@@ -72,10 +73,10 @@ export class DashboardComponent {
       icon: '🔄',
       isOpen: false,
       subMenu: [
-        { subMenuId: 6, title: 'Borrow List', route: 'borrow-list', menuId: 4 },
-        { subMenuId: 7, title: 'Borrow Book', route: 'borrow-book', menuId: 4 },
-        { subMenuId: 8, title: 'Book Return', route: 'book-return', menuId: 4 },
-        { subMenuId: 9, title: 'Borrow History', route: 'borrow-history', menuId: 4 },
+        { subMenuId: 7, title: 'Borrow List', route: 'borrow-list', menuId: 4 },
+        { subMenuId: 8, title: 'Borrow Book', route: 'borrow-book', menuId: 4 },
+        { subMenuId: 9, title: 'Book Return', route: 'book-return', menuId: 4 },
+        { subMenuId: 10, title: 'Borrow History', route: 'borrow-history', menuId: 4 },
       ],
     },
     {
@@ -84,8 +85,8 @@ export class DashboardComponent {
       icon: '👥',
       isOpen: false,
       subMenu: [
-        { subMenuId: 10, title: 'Member List', route: 'member-list', menuId: 5 },
-        { subMenuId: 11, title: 'Add Member', route: 'add-member', menuId: 5 },
+        { subMenuId: 11, title: 'Member List', route: 'member-list', menuId: 5 },
+        { subMenuId: 12, title: 'Add Member', route: 'add-member', menuId: 5 },
       ],
     },
   ]);

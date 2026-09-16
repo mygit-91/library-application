@@ -1,0 +1,63 @@
+<div class="container">
+  <header class="header-panel">
+    <h1 class="page-title">🏷️ Categories List</h1>
+
+    <!-- Search -->
+    <div class="search-wrapper">
+      <select
+        [ngModel]="searchFilter()"
+        (ngModelChange)="onFilterChange($event)"
+        class="filter-select"
+      >
+        <option value="all">🔎 All</option>
+        <option value="id">🆔 ID</option>
+        <option value="name">🏷️ Name</option>
+      </select>
+
+      <div class="input-group">
+        <input
+          type="text"
+          [ngModel]="searchText()"
+          (ngModelChange)="onQueryChange($event)"
+          (keyup.enter)="onSearch()"
+          placeholder="Search text..."
+          class="search-input"
+        />
+        <button class="btn-search" (click)="onSearch()">Search</button>
+        <button class="btn-clear" (click)="onClear()">Clear</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Display List Categories -->
+  <div class="table-container">
+    <table class="responsive-table">
+      <!-- Column Headers -->
+      <thead>
+        <tr>
+          <th class="col-id">ID</th>
+          <th class="col-name">Category Name</th>
+          <th class="col-actions">Management</th>
+        </tr>
+      </thead>
+
+      <!-- Table Body -->
+      <tbody>
+        @for (item of listCategories(); track item.categoryId) {
+          <tr>
+            <td class="col-id">{{ item.categoryId }}</td>
+            <td class="col-name">{{ item.categoryName }}</td>
+            <td class="col-actions">
+              <span class="action-link" (click)="onEdit(item.categoryId)">✏️ Edit</span>
+              <span class="action-link" (click)="onDelete(item)">🗑️ Delete</span>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="4" class="empty-state">Empty Data.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
