@@ -6,7 +6,7 @@ import { Categories, GetCategoriesListRequest } from '../../models/categories.mo
 import { EditCategoriesComponent } from './edit-categories.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
-import { DeleteDialogComponent } from '../commons/delete-dialog.component';
+import { DeleteDialogComponent } from '../dialogs/delete-dialog.component';
 
 @Component({
   selector: 'app-categories-list',
@@ -42,7 +42,7 @@ export class CategoriesListComponent {
 
       this.categoriesService.getCategoriesList(input).subscribe({
         next: (response) => {
-          // Update book list
+          // Update list
           this.listCategories.set(response);
         },
         error: (error) => {
@@ -59,19 +59,19 @@ export class CategoriesListComponent {
   }
 
   // Open edit dialog
-  onEdit(categoriesId: string) {
+  onEdit(categories: Categories) {
     const dialogRef = this.dialog.open(EditCategoriesComponent, {
-      width: '70vw',
+      width: '35vw',
       height: 'cal(100vh-10px)',
       maxWidth: '100vw',
       maxHeight: '100vh',
-      data: { categoriesId: categoriesId },
+      data: categories,
     });
 
     // On dialog response
     dialogRef.afterClosed().subscribe((updatedItem) => {
       if (updatedItem) {
-        // Update book in list
+        // Update list
         this.listCategories.update((list) =>
           list.map((item) => (item.categoryId === updatedItem.categoryId ? updatedItem : item)),
         );
@@ -79,18 +79,18 @@ export class CategoriesListComponent {
     });
   }
 
-  // Open confirm delete dialog
+  // Open delete dialog
   onDelete(categories: Categories) {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       width: '500px',
-      data: { message: `Do you want to delete the book "${categories.categoryName}"?` },
+      data: { message: `Do you want to delete the categories "${categories.categoryName}"?` },
     });
 
     dialogRef.afterClosed().subscribe((isConfirm) => {
       if (isConfirm) {
         this.categoriesService.deleteCategories(categories.categoryId).subscribe({
           next: (message) => {
-            // Update book list
+            // Update list
             this.listCategories.update((list) =>
               list.filter((item) => item.categoryId !== categories.categoryId),
             );

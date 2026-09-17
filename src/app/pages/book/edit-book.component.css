@@ -40,7 +40,7 @@
 }
 
 label {
-  font-weight: 600;
+  font-weight: 500;
   margin-bottom: 0.4rem;
   color: #475569;
   font-size: 0.9rem;
@@ -188,4 +188,9 @@ button {
 .close-icon-btn:hover {
   background-color: #edf2f7; /* ไฮไลท์พื้นหลังวงกลมเมื่อเมาส์ชี้ */
   color: #ef4444;
+}
+
+.required-star {
+  color: red;
+  margin-left: 4px; /* เว้นระยะห่างจากตัวหนังสือเล็กน้อยเพื่อความสวยงาม */
 }

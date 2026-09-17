@@ -1,12 +1,7 @@
 import { Component, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { BookService } from '../../services/book/book.service';
-
-interface CategoryOption {
-  id: string;
-  name: string;
-}
+import { CategoriesService } from '../../services/categories/categories.service';
 
 @Component({
   selector: 'app-add-categories',
@@ -16,57 +11,34 @@ interface CategoryOption {
   styleUrls: ['./add-categories.component.css'],
 })
 export class AddCategoriesComponent {
-  private bookService = inject(BookService);
-  bookForm: FormGroup;
-
-  categories = signal<CategoryOption[]>([
-    { id: 'e1d2c3b4-a5b6-4c7d-8e9f-0a1b2c3d4e5f', name: 'Educations' },
-    { id: 'f3e2d1c0-b9a8-4736-8251-0d9c8b7a6f5e', name: 'Sports' },
-  ]);
+  private categoriesService = inject(CategoriesService);
+  categoriesForm: FormGroup;
 
   constructor(private fb: FormBuilder) {
-    this.bookForm = this.fb.group({
-      isbn: ['', [Validators.required, Validators.pattern(/^[0-9-]{10,13}$/)]],
-      title: ['', [Validators.required, Validators.minLength(3)]],
-      author: ['', Validators.required],
-      publisher: ['', Validators.required],
-      publishYear: ['', [Validators.required, Validators.pattern(/^[0-9]{4}$/)]],
-      totalCopies: ['0', [Validators.required, Validators.min(0)]],
-      availableCopies: ['0', [Validators.required, Validators.min(0)]],
-      location: ['', Validators.required],
-      categoryId: ['', Validators.required],
-      isActive: [true],
+    this.categoriesForm = this.fb.group({
+      categoryName: ['', [Validators.required]],
     });
   }
 
   onSubmit(): void {
-    if (this.bookForm.valid) {
-      this.bookService.addBook(this.bookForm.value).subscribe({
+    if (this.categoriesForm.valid) {
+      this.categoriesService.addCategories(this.categoriesForm.value).subscribe({
         next: (response) => {
+          this.onClear();
           alert(response);
-
-          this.bookForm.reset({
-            isActive: true,
-            availableCopies: '0',
-            totalCopies: '0',
-            categoryId: '',
-          });
         },
         error: (error) => {
           window.alert(error?.message || 'Save data failed!');
         },
       });
     } else {
-      this.bookForm.markAllAsTouched();
+      this.categoriesForm.markAllAsTouched();
     }
   }
 
   onClear() {
-    this.bookForm.reset({
-      isActive: true,
-      availableCopies: '0',
-      totalCopies: '0',
-      categoryId: '',
+    this.categoriesForm.reset({
+      categoryName: '',
     });
   }
 }

@@ -109,48 +109,6 @@
   background-color: #4b5563;
 }
 
-/* --- Book Grid (Responsive คอลัมน์ขยายตามสัดส่วนจออัตโนมัติ) --- */
-.book-grid {
-  display: grid;
-  /* จอมือถือจะกว้างเต็มที่ ขยับเป็น 2, 3, 4 คอลัมน์ตามความกว้างอุปกรณ์ */
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 1.5rem;
-}
-
-.book-card {
-  background: #ffffff;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-  display: flex;
-  flex-direction: column;
-  cursor: pointer;
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
-}
-
-.book-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-}
-
-.book-cover-wrapper {
-  position: relative;
-  width: 100%;
-  padding-top: 130px; /* อัตราส่วนความกว้างต่อความสูงของปกหนังสือ */
-  background-color: #e5e7eb;
-}
-
-.book-card-cover {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
 .badge {
   position: absolute;
   top: 0.75rem;
@@ -161,44 +119,6 @@
   font-weight: 600;
   padding: 0.25rem 0.6rem;
   border-radius: 50px;
-}
-
-.book-card-info {
-  padding: 1.25rem;
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-}
-
-.book-card-title {
-  font-size: 1.1rem;
-  margin: 0 0 0.5rem 0;
-  font-weight: 600;
-  line-height: 1.4;
-}
-
-.book-card-author {
-  font-size: 0.85rem;
-  color: #6b7280;
-  margin: 0 0 0.5rem 0;
-}
-
-.book-card-stock {
-  font-size: 0.85rem;
-  color: #4b5563;
-  margin-bottom: 1.25rem;
-}
-
-.book-card-footer {
-  margin-top: auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.book-card-price {
-  font-weight: 700;
-  color: #10b981;
 }
 
 .view-btn {
@@ -217,34 +137,6 @@
   background: white;
   border-radius: 12px;
   color: #6b7280;
-}
-
-/* --- POPUP MODAL STYLES (รองรับ Scrollbar ภายในกรณีจอมือถือเตี้ย) --- */
-.modal-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  padding: 1rem;
-}
-
-.modal-content {
-  background: white;
-  border-radius: 16px;
-  width: 100%;
-  max-width: 650px;
-  max-height: 90vh; /* บังคับไม่ให้โมดอลทะลุขอบจอแนวตั้ง */
-  position: relative;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
 }
 
 .close-icon-btn {

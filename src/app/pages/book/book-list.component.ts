@@ -7,7 +7,7 @@ import { GetBookListRequest, Books } from '../../models/book.model';
 import { EditBookComponent } from './edit-book.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
-import { DeleteDialogComponent } from '../commons/delete-dialog.component';
+import { DeleteDialogComponent } from '../dialogs/delete-dialog.component';
 
 @Component({
   selector: 'app-book-list',
@@ -46,7 +46,7 @@ export class BookListComponent {
 
       this.bookService.getBookList(input).subscribe({
         next: (response) => {
-          // Update book list
+          // Update list
           this.listBooks.set(response);
         },
         error: (error) => {
@@ -89,7 +89,7 @@ export class BookListComponent {
     // On dialog response
     dialogRef.afterClosed().subscribe((updatedItem) => {
       if (updatedItem) {
-        // Update book in list
+        // Update list
         this.listBooks.update((list) =>
           list.map((item) => (item.bookId === updatedItem.bookId ? updatedItem : item)),
         );
@@ -97,7 +97,7 @@ export class BookListComponent {
     });
   }
 
-  // Open confirm delete dialog
+  // Open delete dialog
   onDelete(book: Books) {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       width: '500px',
@@ -108,7 +108,7 @@ export class BookListComponent {
       if (isConfirm) {
         this.bookService.deleteBook(book.bookId).subscribe({
           next: (message) => {
-            // Update book list
+            // Update list
             this.listBooks.update((list) => list.filter((item) => item.bookId !== book.bookId));
             window.alert(message);
           },

@@ -29,14 +29,14 @@
     </div>
   </header>
 
-  <!-- Display List Categories -->
+  <!-- Display Data List -->
   <div class="table-container">
     <table class="responsive-table">
       <!-- Column Headers -->
       <thead>
         <tr>
           <th class="col-id">ID</th>
-          <th class="col-name">Category Name</th>
+          <th class="col-name">Name</th>
           <th class="col-actions">Management</th>
         </tr>
       </thead>
@@ -48,13 +48,13 @@
             <td class="col-id">{{ item.categoryId }}</td>
             <td class="col-name">{{ item.categoryName }}</td>
             <td class="col-actions">
-              <span class="action-link" (click)="onEdit(item.categoryId)">✏️ Edit</span>
+              <span class="action-link" (click)="onEdit(item)">✏️ Edit</span>
               <span class="action-link" (click)="onDelete(item)">🗑️ Delete</span>
             </td>
           </tr>
         } @empty {
           <tr>
-            <td colspan="4" class="empty-state">Empty Data.</td>
+            <td colspan="4" class="empty-state">No Categories Found.</td>
           </tr>
         }
       </tbody>

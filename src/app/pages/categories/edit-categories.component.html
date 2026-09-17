@@ -1,121 +1,25 @@
 <div class="form-container">
   <button class="close-icon-btn" (click)="close()">✕</button>
-  <header class="header-panel"><h1 class="page-title">📚 Edit Book</h1></header>
+  <header class="header-panel"><h1 class="page-title">🏷️ Edit Categories</h1></header>
 
-  <form [formGroup]="bookForm" (ngSubmit)="onSubmit()">
-    <div class="form-grid">
-      <div class="form-group">
-        <label for="isbn">ISBN *</label>
-        <input
-          id="isbn"
-          type="text"
-          formControlName="isbn"
-          placeholder="Example: 978-616-X-XXXX-X"
-        />
-        @if (bookForm.get('isbn')?.touched && bookForm.get('isbn')?.invalid) {
-          <span class="error-msg">Please enter number 10-13 digits</span>
-        }
-      </div>
-
-      <div class="form-group">
-        <label for="title">Title *</label>
-        <input
-          id="title"
-          type="text"
-          formControlName="title"
-          placeholder="Specify title or book name"
-        />
-        @if (bookForm.get('title')?.touched && bookForm.get('title')?.invalid) {
-          <span class="error-msg">Please enter at least 3 character</span>
-        }
-      </div>
-
-      <div class="form-group">
-        <label for="author">Author *</label>
-        <input id="author" type="text" formControlName="author" placeholder="Specify author" />
-        @if (bookForm.get('author')?.touched && bookForm.get('author')?.invalid) {
-          <span class="error-msg">Please enter Author</span>
-        }
-      </div>
-
-      <div class="form-group">
-        <label for="publisher">Publisher *</label>
-        <input
-          id="publisher"
-          type="text"
-          formControlName="publisher"
-          placeholder="Specify publisher"
-        />
-        @if (bookForm.get('publisher')?.touched && bookForm.get('publisher')?.invalid) {
-          <span class="error-msg">Please enter Publisher</span>
-        }
-      </div>
-
-      <div class="form-group">
-        <label for="publishYear">Publish Year (AD) *</label>
-        <input
-          id="publishYear"
-          type="text"
-          formControlName="publishYear"
-          placeholder="Example: 2026"
-        />
-        @if (bookForm.get('publishYear')?.touched && bookForm.get('publishYear')?.invalid) {
-          <span class="error-msg">Please enter 4 digits</span>
-        }
-      </div>
-
-      <div class="form-group">
-        <label for="totalCopies">Total Copies *</label>
-        <input id="totalCopies" type="number" formControlName="totalCopies" />
-        @if (bookForm.get('totalCopies')?.touched && bookForm.get('totalCopies')?.invalid) {
-          <span class="error-msg">Value must be 0 or higher </span>
-        }
-      </div>
-
-      <div class="form-group">
-        <label for="availableCopies">Available Copies*</label>
-        <input id="availableCopies" type="number" formControlName="availableCopies" />
-        @if (bookForm.get('availableCopies')?.touched && bookForm.get('availableCopies')?.invalid) {
-          <span class="error-msg">Value must be 0 or higher </span>
-        }
-      </div>
-
-      <div class="form-group">
-        <label for="category">Category *</label>
-        <select id="category" formControlName="categoryId">
-          <option value="" disabled selected>-- select --</option>
-          @for (category of categories(); track category.id) {
-            <option [value]="category.id">{{ category.name }}</option>
-          }
-        </select>
-        @if (bookForm.get('category')?.touched && bookForm.get('category')?.invalid) {
-          <span class="error-msg">Please select Category </span>
-        }
-      </div>
-
-      <div class="form-group">
-        <label for="location">Location *</label>
-        <input
-          id="location"
-          type="text"
-          formControlName="location"
-          placeholder="Example: 3rd Floor, Cabinet B2."
-        />
-        @if (bookForm.get('location')?.touched && bookForm.get('location')?.invalid) {
-          <span class="error-msg">Please enter Location</span>
-        }
-      </div>
-
-      <div class="form-group full-width checkbox-row">
-        <label class="custom-checkbox">
-          <input type="checkbox" formControlName="isActive" />
-          <span>Is Active</span>
-        </label>
-      </div>
+  <form [formGroup]="categoriesForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="categoryName">Category Name<span class="required-star">*</span></label>
+      <input
+        id="categoryName"
+        type="text"
+        formControlName="categoryName"
+        placeholder="Specify category name"
+      />
+      @if (
+        categoriesForm.get('categoryName')?.touched && categoriesForm.get('categoryName')?.invalid
+      ) {
+        <span class="error-msg">Please enter category name.</span>
+      }
     </div>
 
     <div class="form-actions">
-      <button type="submit" class="btn-save" [disabled]="bookForm.invalid">Submit</button>
+      <button type="submit" class="btn-save" [disabled]="categoriesForm.invalid">Submit</button>
       <button type="button" class="btn-cancel" (click)="onClear()">Clear</button>
     </div>
   </form>

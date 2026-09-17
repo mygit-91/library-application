@@ -40,7 +40,7 @@
 }
 
 label {
-  font-weight: 600;
+  font-weight: 500;
   margin-bottom: 0.4rem;
   color: #475569;
   font-size: 0.9rem;
@@ -164,4 +164,9 @@ button {
   color: #1e293b;
   padding: 0.65rem;
   background-color: #ffffff;
+}
+
+.required-star {
+  color: red;
+  margin-left: 4px; /* เว้นระยะห่างจากตัวหนังสือเล็กน้อยเพื่อความสวยงาม */
 }
