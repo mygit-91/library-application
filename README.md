@@ -12,7 +12,7 @@ To start a local development server, run:
 
 # Login User: Must be config on database first
 Username: Admin
-Password: Test-P@ssw0rd
+Password: P@ssw0rd
 
 
 
