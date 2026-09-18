@@ -36,7 +36,7 @@
     @for (book of listBooks(); track book.bookId) {
       <div class="book-card">
         <div class="book-cover-wrapper">
-          <img [src]="" [alt]="book.title" loading="lazy" class="book-card-cover" />
+          <img [src]="'assets/images/image-1.jpg'" loading="lazy" class="book-card-cover" />
           <span class="badge">{{ book.categoryName }}</span>
         </div>
         <div class="book-card-info">
@@ -44,9 +44,12 @@
           <p class="book-card-author">✍️ {{ book.author }}</p>
           <div class="book-card-stock">📦 Available: {{ book.availableCopies }}</div>
           <div class="book-card-footer">
-            <span class="action-link" (click)="openDetatils(book.bookId)">👁️ Details</span>
-            <span class="action-link" (click)="onEdit(book.bookId)">✏️ Edit</span>
-            <span class="action-link" (click)="onDelete(book)">🗑️ Delete</span>
+            <div class="action-grid">
+              <span class="action-link" (click)="openDetatils(book.bookId)">👁️ Details</span>
+              <span class="action-link" (click)="onEdit(book.bookId)">✏️ Edit</span>
+              <span class="action-link" (click)="onBorrow(book)">🔄 Borrow</span>
+              <span class="action-link" (click)="onDelete(book)">🗑️ Delete</span>
+            </div>
           </div>
         </div>
       </div>
@@ -62,7 +65,7 @@
         <button class="close-icon-btn" (click)="closeDetatils()">&times;</button>
         <div class="modal-body">
           <div class="modal-left">
-            <img [src]="" [alt]="book.title" class="modal-cover" />
+            <img [src]="'assets/images/image-2.jpg'" class="modal-cover" />
           </div>
           <div class="modal-right">
             <span class="badge">{{ book.categoryName }}</span>

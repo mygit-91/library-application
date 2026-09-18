@@ -1,3 +1,120 @@
-<div class="welcome-container">
-  <h2 style="color: #1e293b; margin-bottom: 0.5rem">Book Return Space ✨</h2>
+<div class="form-container">
+  <button class="close-icon-btn" (click)="close()">✕</button>
+  <header class="header-panel"><h1 class="page-title">🔄 Return Book</h1></header>
+
+  <form [formGroup]="borrowForm" (ngSubmit)="onSubmit()">
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="isbn">ISBN</label>
+        <input id="isbn" type="text" formControlName="isbn" readonly />
+      </div>
+
+      <div class="form-group">
+        <label for="title">Book Name</label>
+        <input id="title" type="text" formControlName="title" readonly />
+      </div>
+
+      <div class="form-group">
+        <label for="memberIdCard">Member ID Card</label>
+        <input id="memberIdCard" type="text" formControlName="memberIdCard" readonly />
+      </div>
+
+      <div class="form-group">
+        <label for="memberName">Member Name</label>
+        <input id="memberName" type="text" formControlName="memberName" readonly />
+      </div>
+
+      <div class="form-group">
+        <label for="borrowDate">Borrow Date</label>
+        <input id="borrowDate" type="text" formControlName="borrowDate" readonly />
+      </div>
+
+      <div class="form-group">
+        <label for="dueDate">Due Date</label>
+        <input id="dueDate" type="text" formControlName="dueDate" readonly />
+      </div>
+
+      <div class="form-group">
+        <label for="timeStatus">Time Status</label>
+        <input id="timeStatus" type="text" formControlName="timeStatus" readonly />
+      </div>
+
+      <div class="form-group">
+        <label for="returnDate">Return Date<span class="required-star">*</span></label>
+        <input
+          id="returnDate"
+          type="date"
+          [min]="minReturnDate()"
+          [max]="minReturnDate()"
+          formControlName="returnDate"
+          lang="en"
+          [class.error]="
+            borrowForm.get('returnDate')?.touched && borrowForm.get('returnDate')?.invalid
+          "
+        />
+        @if (
+          borrowForm.get('returnDate')?.touched &&
+          borrowForm.get('returnDate')?.hasError('required')
+        ) {
+          <span class="error-msg">Please select return date.</span>
+        }
+      </div>
+    </div>
+
+    <h1 class="page-title-fines">🔄 Fines</h1>
+    <div class="form-grid-fines">
+      <div class="form-group">
+        <label for="finesAmount"
+          >Fines Amount
+          @if (isBorrowOverTime()) {
+            <span class="required-star">*</span>
+          }
+        </label>
+        <input id="finesAmount" type="number" formControlName="finesAmount" />
+        @if (borrowForm.get('finesAmount')?.touched && borrowForm.get('finesAmount')?.invalid) {
+          <span class="error-msg">Please enter fines amount.</span>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="paymentStatus"
+          >Payment Status
+          @if (isBorrowOverTime()) {
+            <span class="required-star">*</span>
+          }
+        </label>
+        <input id="paymentStatus" type="text" formControlName="paymentStatus" />
+        @if (borrowForm.get('paymentStatus')?.touched && borrowForm.get('paymentStatus')?.invalid) {
+          <span class="error-msg">Please enter payment status.</span>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="paidDate"
+          >Paid Date
+          @if (isBorrowOverTime()) {
+            <span class="required-star">*</span>
+          }
+        </label>
+        <input
+          id="paidDate"
+          type="date"
+          [min]="minReturnDate()"
+          [max]="minReturnDate()"
+          formControlName="paidDate"
+          lang="en"
+          [class.error]="borrowForm.get('paidDate')?.touched && borrowForm.get('paidDate')?.invalid"
+        />
+        @if (
+          borrowForm.get('paidDate')?.touched && borrowForm.get('paidDate')?.hasError('required')
+        ) {
+          <span class="error-msg">Please select paid date.</span>
+        }
+      </div>
+    </div>
+    <div class="form-actions">
+      <button type="submit" class="btn-save" [disabled]="borrowForm.invalid">Submit</button>
+      <button type="button" class="btn-cancel" (click)="onClear()">Clear</button>
+    </div>
+  </form>
 </div>

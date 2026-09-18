@@ -33,7 +33,7 @@ export class CategoriesListComponent {
 
   onSearch(): void {
     if (this.searchFilter() != 'all' && !this.searchText().trim()) {
-      window.alert('Please enter value for searching');
+      alert('Please enter value for searching');
     } else {
       const input: GetCategoriesListRequest = {
         searchTopic: this.searchFilter(),
@@ -44,9 +44,12 @@ export class CategoriesListComponent {
         next: (response) => {
           // Update list
           this.listCategories.set(response);
+          if (!response || response.length == 0) {
+            alert('No data found.');
+          }
         },
         error: (error) => {
-          window.alert(error?.message || 'Get data failed!');
+          alert(error?.message || 'Get data failed!');
         },
       });
     }
@@ -94,10 +97,10 @@ export class CategoriesListComponent {
             this.listCategories.update((list) =>
               list.filter((item) => item.categoryId !== categories.categoryId),
             );
-            window.alert(message);
+            alert(message);
           },
           error: (error) => {
-            window.alert(error?.message || 'Delete data failed!');
+            alert(error?.message || 'Delete data failed!');
           },
         });
       }

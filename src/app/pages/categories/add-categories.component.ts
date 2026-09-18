@@ -28,7 +28,7 @@ export class AddCategoriesComponent {
           alert(response);
         },
         error: (error) => {
-          window.alert(error?.message || 'Save data failed!');
+          alert(error?.message || 'Save data failed!');
         },
       });
     } else {

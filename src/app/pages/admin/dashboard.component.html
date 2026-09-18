@@ -18,20 +18,20 @@
 
       <nav class="sidebar-menu">
         <ul>
-          @for (item of menuItems(); track item.menuId; let idx = $index) {
+          @for (menu of menuItems(); track menu.menuId; let idx = $index) {
             <li class="menu-item-wrapper">
               <button
                 class="menu-btn"
-                [class.active-menu]="item.isOpen"
+                [class.active-menu]="menu.isOpen"
                 (click)="toggleSubMenu(idx)"
               >
-                <span class="menu-icon">{{ item.icon }}</span>
-                <span class="menu-text">{{ item.title }}</span>
-                <span class="arrow" [class.rotated]="item.isOpen">▼</span>
+                <span class="menu-icon">{{ menu.icon }}</span>
+                <span class="menu-text">{{ menu.title }}</span>
+                <span class="arrow" [class.rotated]="menu.isOpen">▼</span>
               </button>
 
-              <ul class="submenu" [class.show]="item.isOpen">
-                @for (sub of item.subMenu; track sub.title) {
+              <ul class="submenu" [class.show]="menu.isOpen">
+                @for (sub of menu.subMenu; track sub.title) {
                   <li>
                     @if (sub.route === 'logout') {
                       <a (click)="logout()" style="cursor: pointer">

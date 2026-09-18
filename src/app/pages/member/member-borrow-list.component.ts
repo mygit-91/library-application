@@ -2,50 +2,48 @@ import { Component, computed, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth/auth.service';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { BorrowData, GetBorrowListRequest } from '../../models/borrow.model';
 import { BorrowService } from '../../services/borrowings/borrow.service';
 
 @Component({
-  selector: 'app-borrow-history',
+  selector: 'app-member-borrow-list',
   standalone: true,
   imports: [CommonModule, FormsModule, MatDialogModule, MatButtonModule],
-  templateUrl: './borrow-history.component.html',
-  styleUrls: ['./borrow-history.component.css'],
+  templateUrl: './member-borrow-list.component.html',
+  styleUrls: ['./member-borrow-list.component.css'],
 })
-export class BorrowHistoryComponent {
+export class MemberBorrowListComponent {
   private authService = inject(AuthService);
   private borrowService = inject(BorrowService);
 
   borrowList = signal<BorrowData[]>([]);
-  searchFilter = signal<string>('all');
   searchText = signal<string>('');
   selectedBorrowId = signal<string | null>(null);
-
-  onFilterChange(newFilter: string): void {
-    this.searchFilter.set(newFilter);
-  }
 
   onQueryChange(newQuery: string): void {
     this.searchText.set(newQuery);
   }
 
   onSearch(): void {
-    if (this.searchFilter() != 'all' && !this.searchText().trim()) {
-      alert('Please enter value for searching');
+    if (!this.searchText().trim() || this.searchText().trim().length < 13) {
+      alert('Please enter id card with in 13 digits');
     } else {
       const input: GetBorrowListRequest = {
-        searchTopic: this.searchFilter(),
+        searchTopic: 'membercardid',
         searchText: this.searchText().trim(),
         isStaff: this.authService.isLoggedIn(),
-        isBorrowList: false,
+        isBorrowList: true,
       };
 
       this.borrowService.getBorrowingsList(input).subscribe({
         next: (response) => {
           // Update list
           this.borrowList.set(response);
+          if (!response || response.length == 0) {
+            alert('No data found.');
+          }
         },
         error: (error) => {
           alert(error?.message || 'Get data failed!');
@@ -55,7 +53,6 @@ export class BorrowHistoryComponent {
   }
 
   onClear(): void {
-    this.searchFilter.set('all');
     this.searchText.set('');
     this.borrowList.set([]);
   }

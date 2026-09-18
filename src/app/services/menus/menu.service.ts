@@ -17,7 +17,7 @@ export class MenuService {
       icon: '👤',
       isOpen: false,
       subMenu: [
-        { title: 'Profile', route: 'admin-profile' },
+        { title: 'Profile', route: 'profile' },
         { title: 'Logout', route: 'logout' },
       ],
     },
@@ -48,8 +48,6 @@ export class MenuService {
       isOpen: false,
       subMenu: [
         { title: 'Borrow List', route: 'borrow-list' },
-        { title: 'Borrow Book', route: 'borrow-book' },
-        { title: 'Book Return', route: 'book-return' },
         { title: 'Borrow History', route: 'borrow-history' },
       ],
     },

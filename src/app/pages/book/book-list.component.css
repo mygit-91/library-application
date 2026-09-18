@@ -191,7 +191,7 @@
 
 .book-card-footer {
   margin-top: auto;
-  display: flex;
+  /* display: flex; */
   justify-content: space-between;
   align-items: center;
 }
@@ -426,5 +426,17 @@
 }
 
 .action-link:nth-child(3):hover {
+  color: #3182ce; /* รายละเอียด: สีน้ำเงิน */
+}
+
+.action-link:nth-child(4):hover {
   color: #e53e3e; /* ลบ: สีแดง */
+}
+
+/* กล่องครอบหลักที่แบ่งเป็น 2 แถว 2 คอลัมน์ */
+.action-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* แบ่งเป็น 2 คอลัมน์เท่าๆ กัน */
+  gap: 2px 20px; /* ระยะห่าง (แนวตั้ง 12px, แนวนอน 16px) ปรับได้ตามชอบ */
+  margin: 0 auto; /* จัดให้ตัวกริดอยู่กึ่งกลางของคอลัมน์ตารางหลัก */
 }

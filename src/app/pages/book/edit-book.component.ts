@@ -58,12 +58,15 @@ export class EditBookComponent {
         if (data && data.length > 0) {
           // Fetch data
           this.bookForm.patchValue(data[0], { emitEvent: false });
+          if (!data || data.length == 0) {
+            alert('No book found.');
+          }
         } else {
-          window.alert('Book data not found');
+          alert('Book data not found');
         }
       },
       error: (error) => {
-        window.alert(error?.message || 'Get book data failed!');
+        alert(error?.message || 'Get book data failed!');
       },
     });
   }
@@ -79,12 +82,15 @@ export class EditBookComponent {
         if (data && data.length > 0) {
           // Set values
           this.categories.set(data);
+          if (!data || data.length == 0) {
+            alert('No categories found.');
+          }
         } else {
-          window.alert('Categorie data not found');
+          alert('Categorie data not found');
         }
       },
       error: (error) => {
-        window.alert(error?.message || 'Get categorie data failed!');
+        alert(error?.message || 'Get categorie data failed!');
       },
     });
   }
@@ -102,14 +108,14 @@ export class EditBookComponent {
 
   onSubmit() {
     if (this.bookForm.valid) {
-      console.log(this.bookForm.value);
+      // console.log(this.bookForm.value);
       this.bookService.updateBook(this.bookForm.value).subscribe({
         next: (message) => {
           alert(message);
           this.dialogRef.close(this.bookForm.value);
         },
         error: (error) => {
-          window.alert(error?.message || 'Update data failed!');
+          alert(error?.message || 'Update data failed!');
         },
       });
     } else {

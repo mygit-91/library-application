@@ -1,0 +1,88 @@
+<div class="form-container">
+  <button class="close-icon-btn" (click)="close()">✕</button>
+  <header class="header-panel"><h1 class="page-title">🔄 Borrow Book</h1></header>
+
+  <form [formGroup]="borrowForm" (ngSubmit)="onSubmit()">
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="isbn">ISBN</label>
+        <input id="isbn" type="text" formControlName="isbn" readonly />
+      </div>
+
+      <div class="form-group">
+        <label for="title">Book Name</label>
+        <input id="title" type="text" formControlName="title" readonly />
+      </div>
+
+      <div class="form-group">
+        <label for="memberIdCard">Member ID Card<span class="required-star">*</span></label>
+        <div class="search-group">
+          <input
+            id="memberIdCard"
+            type="tel"
+            formControlName="memberIdCard"
+            maxlength="13"
+            pattern="[0-9]{13}"
+            placeholder="Enter id card within 13 digits..."
+            class="search-input"
+          />
+          <button type="button" class="btn-custom" (click)="getMember()">Check</button>
+        </div>
+        @if (borrowForm.get('memberIdCard')?.touched && borrowForm.get('memberIdCard')?.invalid) {
+          <span class="error-msg">Please enter id card with in 13 digits.</span>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="memberName">Member Name</label>
+        <input id="memberName" type="text" formControlName="memberName" readonly />
+      </div>
+
+      <div class="form-group">
+        <label for="borrowDate">Borrow Date<span class="required-star">*</span></label>
+        <input
+          id="borrowDate"
+          type="date"
+          [min]="minBorrowDate()"
+          formControlName="borrowDate"
+          lang="en"
+          [class.error]="
+            borrowForm.get('borrowDate')?.touched && borrowForm.get('borrowDate')?.invalid
+          "
+        />
+        @if (
+          borrowForm.get('borrowDate')?.touched &&
+          borrowForm.get('borrowDate')?.hasError('required')
+        ) {
+          <span class="error-msg">Please enter borrow date.</span>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="dueDate">Due Date<span class="required-star">*</span></label>
+        <input
+          id="dueDate"
+          type="date"
+          [min]="minDueDate()"
+          formControlName="dueDate"
+          lang="en"
+          [class.error]="borrowForm.get('dueDate')?.touched && borrowForm.get('dueDate')?.invalid"
+        />
+
+        @if (borrowForm.get('dueDate')?.touched) {
+          @if (borrowForm.get('dueDate')?.hasError('required')) {
+            <span class="error-msg">Please enter due date.</span>
+          } @else if (
+            borrowForm.get('dueDate')?.hasError('dateInvalid') || borrowForm.hasError('dateInvalid')
+          ) {
+            <span class="error-msg">Due Date must be more than Borrow Date.</span>
+          }
+        }
+      </div>
+    </div>
+    <div class="form-actions">
+      <button type="submit" class="btn-save" [disabled]="borrowForm.invalid">Submit</button>
+      <button type="button" class="btn-cancel" (click)="onClear()">Clear</button>
+    </div>
+  </form>
+</div>

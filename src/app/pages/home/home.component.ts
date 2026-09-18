@@ -31,7 +31,7 @@ export class HomeComponent {
 
   onSearch(): void {
     if (this.searchFilter() != 'all' && !this.searchText().trim()) {
-      window.alert('Please enter value for searching');
+      alert('Please enter value for searching');
     } else {
       const input: GetBookListRequest = {
         searchTopic: this.searchFilter(),
@@ -43,9 +43,12 @@ export class HomeComponent {
         next: (data) => {
           // Update book list
           this.listBooks.set(data);
+          if (!data || data.length == 0) {
+            alert('No data found.');
+          }
         },
         error: (error) => {
-          window.alert(error?.message || 'Get data failed!');
+          alert(error?.message || 'Get data failed!');
         },
       });
     }

@@ -1,27 +1,19 @@
 <div class="container">
   <header class="header-panel">
-    <h1 class="page-title">🔄 Borrow History</h1>
+    <h1 class="page-title">🔄 Borrow List</h1>
 
     <!-- Search -->
     <div class="search-wrapper">
-      <select
-        [ngModel]="searchFilter()"
-        (ngModelChange)="onFilterChange($event)"
-        class="filter-select"
-      >
-        <option value="all">🔎 All</option>
-        <option value="isbn">🆔 ISBN</option>
-        <option value="title">📖 Book Title</option>
-        <option value="memberCardId">👥 Member ID Card</option>
-      </select>
-
+      <span style="font-size: 1.1rem; font-weight: 500">👥 ID Card : </span>
       <div class="input-group">
         <input
-          type="text"
+          type="tel"
           [ngModel]="searchText()"
           (ngModelChange)="onQueryChange($event)"
           (keyup.enter)="onSearch()"
-          placeholder="Search text..."
+          maxlength="13"
+          pattern="[0-9]{13}"
+          placeholder="Enter id card with in 13 digits..."
           class="search-input"
         />
         <button class="btn-search" (click)="onSearch()">Search</button>
@@ -36,7 +28,11 @@
       <div class="book-card">
         <div class="book-cover-wrapper">
           <img [src]="'assets/images/image-1.jpg'" loading="lazy" class="book-card-cover" />
-          <span class="badge">{{ borrow.status }}</span>
+          @if (borrow.isOverTime) {
+            <span class="badge-red">Over Time</span>
+          } @else {
+            <span class="badge">On Time</span>
+          }
         </div>
         <div class="book-card-info">
           <h2 class="book-card-title">{{ borrow.bookTitle }}</h2>
@@ -65,14 +61,18 @@
             <img [src]="'assets/images/image-2.jpg'" class="modal-cover" />
           </div>
           <div class="modal-right">
-            <span class="badge">{{ borrow.status }}</span>
+            @if (borrow.isOverTime) {
+              <span class="badge-red">Over Time</span>
+            } @else {
+              <span class="badge">On Time</span>
+            }
             <h2 class="modal-title">{{ borrow.bookTitle }}</h2>
             <p class="modal-detail"><strong>ISBN:</strong> {{ borrow.isbn }}</p>
             <p class="modal-detail"><strong>Author:</strong> {{ borrow.author }}</p>
             <p class="modal-detail"><strong>Borrower:</strong> {{ borrow.memberName }}</p>
+            <p class="modal-detail"><strong>ID Card:</strong> {{ borrow.memberCardId }}</p>
             <p class="modal-detail"><strong>Borrow Date:</strong> {{ borrow.borrowDate }}</p>
-            <p class="modal-detail"><strong>Due Date:</strong> {{ borrow.dueDate }}</p>
-            <p class="modal-detail"><strong>Return Date:</strong> {{ borrow.returnDate }}</p>
+            <p class="modal-detail"><strong>DueDate:</strong> {{ borrow.dueDate }}</p>
             <p class="modal-detail"><strong>Status:</strong> {{ borrow.status }}</p>
             @if (borrow.isOverTime) {
               <p class="modal-detail">
@@ -81,9 +81,6 @@
             } @else {
               <p class="modal-detail"><strong>Time Status:</strong> On Time</p>
             }
-            <p class="modal-detail"><strong>Fines Amount:</strong> {{ borrow.amount }}</p>
-            <p class="modal-detail"><strong>Payment Status:</strong> {{ borrow.paymentStatus }}</p>
-            <p class="modal-detail"><strong>Paid Date:</strong> {{ borrow.paidDate }}</p>
           </div>
         </div>
       </div>

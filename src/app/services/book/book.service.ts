@@ -23,11 +23,11 @@ export class BookService {
   getBookById(bookId: string): Observable<Books[]> {
     return this.http.get<GetBookByIdResponse>('/api/book/get-byid?id=' + bookId).pipe(
       map((response) => {
-        console.log('API Sucess Response:', response);
+        // console.log('API Sucess Response:', response);
         return response.data;
       }),
       catchError((error: HttpErrorResponse) => {
-        console.error('API Error Response:', error);
+        // console.error('API Error Response:', error);
         const errorMessage = error.error?.message || error.message || 'Internal Error';
         return throwError(() => new Error(errorMessage));
       }),
@@ -65,11 +65,11 @@ export class BookService {
   updateBook(input: UpdateBookRequest): Observable<string> {
     return this.http.put<UpdateBookResponse>('/api/book/update', input).pipe(
       map((response) => {
-        console.log('API Sucess Response:', response);
+        // console.log('API Sucess Response:', response);
         return response.message;
       }),
       catchError((error: HttpErrorResponse) => {
-        console.error('API Error Response:', error);
+        // console.error('API Error Response:', error);
         const errorMessage = error.error?.message || error.message || 'Internal Error';
         return throwError(() => new Error(errorMessage));
       }),

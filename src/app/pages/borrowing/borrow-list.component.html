@@ -1,3 +1,97 @@
-<div class="welcome-container">
-  <h2 style="color: #1e293b; margin-bottom: 0.5rem">Borrow List Space ✨</h2>
+<div class="container">
+  <header class="header-panel">
+    <h1 class="page-title">🔄 Borrow List</h1>
+
+    <!-- Search -->
+    <div class="search-wrapper">
+      <select
+        [ngModel]="searchFilter()"
+        (ngModelChange)="onFilterChange($event)"
+        class="filter-select"
+      >
+        <option value="all">🔎 All</option>
+        <option value="isbn">🆔 ISBN</option>
+        <option value="title">📖 Book Title</option>
+        <option value="memberCardId">👥 Member ID Card</option>
+      </select>
+
+      <div class="input-group">
+        <input
+          type="text"
+          [ngModel]="searchText()"
+          (ngModelChange)="onQueryChange($event)"
+          (keyup.enter)="onSearch()"
+          placeholder="Search text..."
+          class="search-input"
+        />
+        <button class="btn-search" (click)="onSearch()">Search</button>
+        <button class="btn-clear" (click)="onClear()">Clear</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Display Data List -->
+  <main class="book-grid">
+    @for (borrow of borrowList(); track borrow.borrowId) {
+      <div class="book-card">
+        <div class="book-cover-wrapper">
+          <img [src]="'assets/images/image-1.jpg'" loading="lazy" class="book-card-cover" />
+          @if (borrow.isOverTime) {
+            <span class="badge-red">Over Time</span>
+          } @else {
+            <span class="badge">On Time</span>
+          }
+        </div>
+        <div class="book-card-info">
+          <h2 class="book-card-title">{{ borrow.bookTitle }}</h2>
+          <p class="book-card-author">✍️ {{ borrow.author }}</p>
+          <div class="book-card-stock">👥 {{ borrow.memberName }}</div>
+          <div class="book-card-footer">
+            <div class="action-grid">
+              <span class="action-link" (click)="openDetatils(borrow.borrowId)">👁️ Details</span>
+              <span class="action-link" (click)="openReturn(borrow)">🔄 Return</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    } @empty {
+      <div class="no-data"><p>🔍 No Borrowings found.</p></div>
+    }
+  </main>
+
+  <!-- ==================== Popup Modal Detail ==================== -->
+  @if (selectedBorrow(); as borrow) {
+    <div class="modal-backdrop" (click)="closeDetatils()">
+      <div class="modal-content" (click)="$event.stopPropagation()">
+        <button class="close-icon-btn" (click)="closeDetatils()">&times;</button>
+        <div class="modal-body">
+          <div class="modal-left">
+            <img [src]="'assets/images/image-2.jpg'" class="modal-cover" />
+          </div>
+          <div class="modal-right">
+            @if (borrow.isOverTime) {
+              <span class="badge-red">Over Time</span>
+            } @else {
+              <span class="badge">On Time</span>
+            }
+            <h2 class="modal-title">{{ borrow.bookTitle }}</h2>
+            <p class="modal-detail"><strong>ISBN:</strong> {{ borrow.isbn }}</p>
+            <p class="modal-detail"><strong>Author:</strong> {{ borrow.author }}</p>
+            <p class="modal-detail"><strong>Borrower:</strong> {{ borrow.memberName }}</p>
+            <p class="modal-detail"><strong>ID Card:</strong> {{ borrow.memberCardId }}</p>
+            <p class="modal-detail"><strong>Borrow Date:</strong> {{ borrow.borrowDate }}</p>
+            <p class="modal-detail"><strong>DueDate:</strong> {{ borrow.dueDate }}</p>
+            <p class="modal-detail"><strong>Status:</strong> {{ borrow.status }}</p>
+            @if (borrow.isOverTime) {
+              <p class="modal-detail">
+                <strong>Time Status:</strong><span style="color: red"> Over Time</span>
+              </p>
+            } @else {
+              <p class="modal-detail"><strong>Time Status:</strong> On Time</p>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  }
 </div>

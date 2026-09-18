@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { BookService } from '../../services/book/book.service';
 import { AuthService } from '../../services/auth/auth.service';
 import { GetBookListRequest, Books } from '../../models/book.model';
+import { BookBorrowComponent } from '../borrowing/book-borrow.component';
 import { EditBookComponent } from './edit-book.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
@@ -36,7 +37,7 @@ export class BookListComponent {
 
   onSearch(): void {
     if (this.searchFilter() != 'all' && !this.searchText().trim()) {
-      window.alert('Please enter value for searching');
+      alert('Please enter value for searching');
     } else {
       const input: GetBookListRequest = {
         searchTopic: this.searchFilter(),
@@ -48,9 +49,12 @@ export class BookListComponent {
         next: (response) => {
           // Update list
           this.listBooks.set(response);
+          if (!response || response.length == 0) {
+            alert('No book found.');
+          }
         },
         error: (error) => {
-          window.alert(error?.message || 'Get data failed!');
+          alert(error?.message || 'Get data failed!');
         },
       });
     }
@@ -76,6 +80,28 @@ export class BookListComponent {
     this.selectedBookId.set(null);
   }
 
+  // Open borrow dialog
+  onBorrow(book: Books) {
+    const dialogRef = this.dialog.open(BookBorrowComponent, {
+      width: '70vw',
+      height: 'cal(100vh-10px)',
+      maxWidth: '100vw',
+      maxHeight: '100vh',
+      data: book,
+    });
+
+    // On dialog response
+    dialogRef.afterClosed().subscribe((borrowedBook) => {
+      if (borrowedBook) {
+        console.log('borrowItem', borrowedBook);
+        // Update list
+        this.listBooks.update((list) =>
+          list.map((item) => (item.bookId === borrowedBook.bookId ? borrowedBook : item)),
+        );
+      }
+    });
+  }
+
   // Open edit dialog
   onEdit(bookId: string) {
     const dialogRef = this.dialog.open(EditBookComponent, {
@@ -87,11 +113,11 @@ export class BookListComponent {
     });
 
     // On dialog response
-    dialogRef.afterClosed().subscribe((updatedItem) => {
-      if (updatedItem) {
+    dialogRef.afterClosed().subscribe((updatedBook) => {
+      if (updatedBook) {
         // Update list
         this.listBooks.update((list) =>
-          list.map((item) => (item.bookId === updatedItem.bookId ? updatedItem : item)),
+          list.map((item) => (item.bookId === updatedBook.bookId ? updatedBook : item)),
         );
       }
     });
@@ -110,10 +136,10 @@ export class BookListComponent {
           next: (message) => {
             // Update list
             this.listBooks.update((list) => list.filter((item) => item.bookId !== book.bookId));
-            window.alert(message);
+            alert(message);
           },
           error: (error) => {
-            window.alert(error?.message || 'Delete data failed!');
+            alert(error?.message || 'Delete data failed!');
           },
         });
       }

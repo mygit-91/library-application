@@ -42,7 +42,7 @@ export class EditCategoriesComponent {
           this.dialogRef.close(this.categoriesForm.value);
         },
         error: (error) => {
-          window.alert(error?.message || 'Update data failed!');
+          alert(error?.message || 'Update data failed!');
         },
       });
     } else {

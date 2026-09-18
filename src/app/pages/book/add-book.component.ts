@@ -50,12 +50,15 @@ export class AddBookComponent {
         if (data && data.length > 0) {
           // Set values
           this.categories.set(data);
+          if (!data || data.length == 0) {
+            alert('No categories found.');
+          }
         } else {
-          window.alert('Categorie data not found');
+          alert('Categorie data not found');
         }
       },
       error: (error) => {
-        window.alert(error?.message || 'Get categorie data failed!');
+        alert(error?.message || 'Get categorie data failed!');
       },
     });
   }
@@ -68,7 +71,7 @@ export class AddBookComponent {
           this.onClear();
         },
         error: (error) => {
-          window.alert(error?.message || 'Save data failed!');
+          alert(error?.message || 'Save data failed!');
         },
       });
     } else {

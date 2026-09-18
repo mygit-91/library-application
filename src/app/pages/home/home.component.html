@@ -36,7 +36,7 @@
     @for (book of listBooks(); track book.bookId) {
       <div class="book-card">
         <div class="book-cover-wrapper">
-          <img [src]="" [alt]="book.title" loading="lazy" class="book-card-cover" />
+          <img [src]="'assets/images/image-1.jpg'" loading="lazy" class="book-card-cover" />
           <span class="badge">{{ book.categoryName }}</span>
         </div>
         <div class="book-card-info">
@@ -60,7 +60,7 @@
         <button class="close-icon-btn" (click)="closePopup()">&times;</button>
         <div class="modal-body">
           <div class="modal-left">
-            <img [src]="" [alt]="book.title" class="modal-cover" />
+            <img [src]="'assets/images/image-2.jpg'" class="modal-cover" />
           </div>
           <div class="modal-right">
             <span class="badge">{{ book.categoryName }}</span>

@@ -19,13 +19,6 @@
   gap: 1.25rem;
 }
 
-.form-grid-fines {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.25rem;
-  padding-top: 2rem;
-}
-
 .form-group {
   display: flex;
   flex-direction: column;
@@ -44,13 +37,6 @@
   font-size: 1.6rem;
   font-weight: 700;
   margin: 0;
-}
-
-.page-title-fines {
-  font-size: 1.6rem;
-  font-weight: 700;
-  margin: 0;
-  padding-top: 3rem;
 }
 
 label {
@@ -132,9 +118,6 @@ button {
 /* เมื่อหน้าจอแท็บเล็ตและคอมพิวเตอร์ จะตัดแบ่งเป็น 2 คอลัมน์ทันที */
 @media (min-width: 640px) {
   .form-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .form-grid-fines {
     grid-template-columns: repeat(2, 1fr);
   }
   .full-width {
@@ -236,4 +219,46 @@ button {
 
 .btn-custom:hover {
   background-color: #1d4ed8;
+}
+
+/* โครงสร้างหลักสำหรับหน้าจอทั่วไป (หน้าจอมือถือขนาดปกติขึ้นไป) */
+.search-group {
+  display: flex;
+  flex-direction: row; /* เรียงเป็นแถวหน้ากระดาน */
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.search-input {
+  flex: 1; /* อินพุตขยายเต็มพื้นที่ ดันปุ่มไปขวาสุด */
+  width: 100%;
+  padding: 10px 14px; /* ขนาด Padding ที่เหมาะกับการกดด้วยนิ้ว */
+  box-sizing: border-box; /* ป้องกันความกว้างอินพุตล้น */
+}
+
+.btn-custom {
+  flex-shrink: 0; /* ห้ามปุ่มหดตัว */
+  padding: 10px 20px;
+  white-space: nowrap; /* บังคับไม่ให้ตัวอักษรบนปุ่มตกบรรทัด */
+  cursor: pointer;
+}
+
+/* 📱 Responsive สำหรับหน้าจอมือถือขนาดเล็กมากๆ (เช่น กว้างน้อยกว่า 480px) */
+@media (max-width: 480px) {
+  .search-group {
+    flex-direction: column; /* เปลี่ยนจากแถวเรียงหน้ากระดาน มาเป็นแนวตั้งซ้อนกัน */
+    align-items: stretch; /* ยืดขยายลูกๆ ให้กว้างเท่ากันทั้งหมด */
+    gap: 8px; /* ระยะห่างแนวตั้งระหว่างอินพุตกับปุ่ม */
+  }
+
+  .search-input {
+    flex: none; /* ยกเลิกการแชร์พื้นที่แบบแถว */
+    width: 100%;
+  }
+
+  .btn-custom {
+    width: 100%; /* สั่งให้ปุ่มยาวเต็ม 100% บนมือถือ เพื่อให้กดง่ายขึ้น */
+    text-align: center;
+  }
 }
