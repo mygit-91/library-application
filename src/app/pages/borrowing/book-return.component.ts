@@ -66,7 +66,7 @@ export class BookReturnComponent {
     );
 
     // Require fines if time status is over time
-    if (this.data.isOverTime == false) {
+    if (this.data.isOverTime) {
       this.isBorrowOverTime.set(true);
       this.borrowForm.get('finesAmount')?.setValidators([Validators.required]);
       this.borrowForm.get('finesAmount')?.updateValueAndValidity();
